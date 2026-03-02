@@ -1,0 +1,30 @@
+\begin{table*}[!t]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}cc|cccccccc}
+\toprule
+{\textbf{Train}} &
+{\textbf{Test}} &
+{\textbf{WER}} &
+{\textbf{CER}} &
+{\textbf{Edit Dist.}} &
+{\textbf{BLEU}} &
+{\textbf{METEOR}} & 
+\textbf{F1}
+\\
+\midrule
+
+\multirow{2}{*}{Baseline} 
+& Und. &  &  &  &  &  &   \\
+& Gen. &  &  &  &  &  &   \\
+\midrule
+
+\multicolumn{2}{c|}{Und. $\rightarrow$ Und.} &  &  &  &  &  &  \\
+\multicolumn{2}{c|}{Und. $\rightarrow$ Gen.} &  &  &  &  &  &  \\
+\midrule
+\multicolumn{2}{c|}{Gen. $\rightarrow$ Und.} &  &  &  &  &  &  \\
+\multicolumn{2}{c|}{Gen. $\rightarrow$ Gen.} &  &  &  &  &  &  \\
+\bottomrule
+\end{tabular*}
+\caption{OCR results of Lumina}
+\label{tab:transfer}
+\end{table*}

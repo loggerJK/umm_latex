@@ -1,0 +1,37 @@
+\begin{table*}[t]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}cc|cccccccc}
+\toprule
+\multirow{2}{*}{\textbf{Train}} 
+& \multirow{2}{*}{\textbf{Test}} 
+& \multicolumn{2}{c}{\textbf{Bagel}} 
+& \multicolumn{2}{c}{\textbf{Janus-pro}} 
+& \multicolumn{2}{c}{\textbf{Lumina}} 
+& \multicolumn{2}{c}{\textbf{Blip3o}} \\
+
+& & Acc. & MAD 
+  & Acc. & MAD 
+  & Acc. & MAD 
+  & Acc. & MAD \\
+\midrule
+
+\multirow{2}{*}{Baseline} 
+& Und. &  &  &  &  &  &  &  &  \\
+& Gen. &  &  &  &  &  &  &  &  \\
+\midrule
+
+
+\multirow{2}{*}{Und.} 
+& Und. &  &  &  &  &  &  &  &  \\
+& Gen. &  &  &  &  &  &  &  &  \\
+\midrule
+
+\multirow{2}{*}{Gen.} 
+& Und. &  &  &  &  &  &  &  &  \\
+& Gen. &  &  &  &  &  &  &  &  \\
+
+\bottomrule
+\end{tabular*}
+\caption{Transferability across different models}
+\label{tab:transfer}
+\end{table*}
