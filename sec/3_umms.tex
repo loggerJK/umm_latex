@@ -1,0 +1,25 @@
+\section{Does knowledge transfer emerge in UMMs?}
+\label{sec:umms}
+\input{fig/architecture}
+Following the architectural taxonomy shown in Figure~\ref{fig:arch_categorize}, we select one representative model from each category for the experiments in this section: (a) Bagel~\cite{deng2025bagel}, (b) Janus-Pro~\cite{chen2025januspro}, (c) Lumina-DiMOO~\cite{xin2025lumina}, and (d) BLIP3-o~\cite{chen2505blip3}.
+\subsection{(toy exp)}
+\input{fig/toy_experiment}
+\begin{itemize}
+    \item Toy experiments: Train an arbitrary character via text-based instruction tuning (for understanding), and examine whether the generation reflects the learned attributes.
+    \item Generation prompt: ``a photo of the man named Samuel''
+\end{itemize}
+
+
+\subsection{(Task transferability across different models)}
+% 모델 selct 어떻게 했는지
+\input{table/counting_models}
+To more systematically quantify the observations from Section~\ref{}, we move to a task-level analysis. Specifically, we design experiments around quantity-aware reasoning, which manifests as object \textbf{counting} on the understanding side and \textbf{count-conditioned generation} on the generation side. Since both tasks share the same underlying concept of object quantity, they provide a common evaluation axis for directly measuring whether numerical knowledge learned from one objective transfers to the other. To verify the directionality of this transfer, we set up two complementary training conditions: training with only the understanding objective and evaluating generation performance (Und. $\rightarrow$ Gen.), and vice versa (Gen. $\rightarrow$ Und.).
+
+\subsubsection{Experimental setting.} For training, we filter the PixMo-Points~\cite{deitke2025molmo} dataset to retain samples with object counts ranging from 0 to 20 and reformulate them as counting-based visual instruction tuning data. We further construct generation training data from the same images by employing Qwen3-VL~\cite{bai2025qwen3} to produce image descriptions and explicitly appending object count information as generation prompts. For evaluation, we prepare two separate protocols. Understanding is evaluated on the test split of the PixMo-Count~\cite{deitke2025molmo} dataset. In terms of generation, we follow the counting evaluation protocol from GenEval~\cite{ghosh2023geneval}. We construct generation prompts in the form \mbox{\texttt{"A photo of [NUMBER] [OBJECT]s"}} with object counts ranging from 2 to 10. Generated images are then evaluated using an object detector~\cite{cheng2022masked} to verify whether the number of detected objects matches the specified count. We report both accuracy and mean absolute deviation (MAD) to measure not only exact correctness but also how close predictions are to the ground truth. 
+
+\subsubsection{(Transferability)} Table~\ref{tab:transfer} summarizes the results of the quantity-aware reasoning experiments. For Janus-Pro~\cite{chen2025januspro} and Blip3-o~\cite{chen2505blip3}, training with only one objective does not lead to noticeable gains on the opposite task compared to the baseline. In contrast, BAGEL~\cite{deng2025bagel} and Lumina-DiMOO~\cite{xin2025lumina} show a clear pattern of bi-directional knowledge transfer. Models trained solely with the understanding objective achieve higher accuracy and lower MAD on count-conditioned generation, indicating that the model acquires more precise numerical concepts. Conversely, training only with the generation objective also improves object counting on the understanding side. This suggests that the numerical concept acquired through one objective generalizes to the other. 
+It is worth noting that among the four models, Lumina-DiMOO~\cite{xin2025lumina} exhibits the strongest transferability. Remarkably, training Lumina-DiMOO~\cite{xin2025lumina} with only the understanding objective yields even greater improvement in generation performance than directly training on the generation task itself, suggesting that cross-task transfer can serve as a more effective learning signal than direct supervision in this setting.
+
+% \subsubsection{(Disucssion)}From an architectural perspective, Lumina-DiMOO~\cite{xin2025lumina}, which corresponds to category (c) in Figure~\ref{}, employs a shared transformer backbone in which understanding and generation operate on the same image representation. 
+% Since understanding and generation reference the identical representation space, any update from one objective is immediately visible to the other, enabling knowledge sharing without requiring a separate bridge or alignment module. 
+% This observation aligns with recent studies~\cite{wu2025harmonizing, jiao2025unitoken, wu2026liquid} that advocate for a unified visual representation to promote mutual benefit between understanding and generation, and provides empirical evidence that the degree of representation sharing is a critical factor in enabling cross-task transfer.

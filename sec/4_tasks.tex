@@ -1,0 +1,12 @@
+\section{Transferability to extended tasks}
+In Section~\ref{sec:umms}, we observed that knowledge integration between understanding and generation occurs in UMMs with certain architectural properties, and that this can be verified through cross-task transferability. While the quantity-aware reasoning experiments confirm that transfer occurs bi-directionally, whether other tasks exhibit the same pattern, or whether transfer favors a particular direction, remains unclear. In this section, we investigate this by extending our analysis to two additional tasks: (1) OCR, where understanding and generation share character-level visual patterns, and (2) spatial position, where both tasks rely on reasoning about relative object locations.
+\subsection{OCR}
+\input{table/ocr_lumina}
+experimental setup - dataset (synthetic, markdown rendered dataset 200k) / metric / results - quantitative , qualitative / discussions: regarding OCR, understanding appears to be supported by learning generation
+\subsection{Spatial position}
+\input{fig/spatial_pos}
+\paragraph{Experimental setup(dataset, evaluation)}
+\paragraph{Discussion on results}
+\subsection{(Debiasing)}
+\input{fig/debiasing}
+
