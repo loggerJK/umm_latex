@@ -1,12 +1,23 @@
 \section{Transferability to extended tasks}
-In Section~\ref{sec:umms}, we observed that knowledge integration between understanding and generation occurs in UMMs with certain architectural properties, and that this can be verified through cross-task transferability. While the quantity-aware reasoning experiments confirm that transfer occurs bi-directionally, whether other tasks exhibit the same pattern, or whether transfer favors a particular direction, remains unclear. In this section, we investigate this by extending our analysis to two additional tasks: (1) OCR, where understanding and generation share character-level visual patterns, and (2) spatial position, where both tasks rely on reasoning about relative object locations.
-\subsection{OCR}
+In Section~\ref{sec:umms}, we observed that knowledge integration between understanding and generation occurs in UMMs with certain architectural properties. The quantity-aware reasoning experiments confirm that this transfer is bi-directional. However, it remains unclear whether other tasks exhibit the same pattern or whether transfer favors a particular direction. We investigate this question by extending our analysis to two additional tasks: OCR, where understanding and generation share character-level visual patterns, and spatial reasoning, where both tasks rely on relative object locations.
+\input{fig/ocr_dataset}
 \input{table/ocr_lumina}
-experimental setup - dataset (synthetic, markdown rendered dataset 200k) / metric / results - quantitative , qualitative / discussions: regarding OCR, understanding appears to be supported by learning generation
-\subsection{Spatial position}
-\input{fig/spatial_pos}
-\paragraph{Experimental setup(dataset, evaluation)}
-\paragraph{Discussion on results}
-\subsection{(Debiasing)}
-\input{fig/debiasing}
 
+\subsection{Text recognition and generation}
+We first examine text recognition and text-contained image generation as a pair of complementary tasks. Both tasks operate on character-level visual cues such as strokes, spacing, and glyph structure, requiring the model to capture highly localized and fine-grained visual details. We investigate whether learning such details through one objective transfers to the other.
+
+\subsubsection{Experimental setting.} We construct a dataset of 200K image-text pairs by rendering Markdown documents into images. Existing OCR benchmarks~\cite{} tend to focus on either short sign-level text in natural scenes or dense full-page documents. Neither setting allows meaningful variation in both recognition and generation. Our rendered dataset provides diverse text content at a moderate difficulty level where both tasks can exhibit measurable room for improvement. 
+For evaluation, We report five metrics. WER~\cite{} and CER~\cite{} measure exact correctness at the word and character level. Edit Distance~\cite{} captures the minimum number of operations needed to align the prediction with the ground truth. METEOR~\cite{} and F1 assess partial matches by accounting for token overlap and ordering. For understanding, these metrics are computed between the model's output and the ground-truth text. For generation, we first apply an OCR model~\cite{glmocr} to read text from the generated image and then compute the same metrics against the original prompt.
+\subsubsection{Generation training improves recognition but not the reverse.} Table~\ref{tab:ocr} summarizes the OCR transfer results. A clear asymmetry emerges between the two transfer directions. Training with the generation objective alone leads to consistent improvement in OCR accuracy across models (Gen.\ $\rightarrow$ Und.). In contrast, training with the understanding objective yields limited gains in text rendering quality (Und.\ $\rightarrow$ Gen.). We attribute this asymmetry to the nature of the two tasks. This contrasts with the counting results in Section~\ref{sec:umms}, where bi-directional transfer was observed.
+
+\subsection{Spatial position}
+
+The previous experiments focus on fine-grained visual details at the character level. We now shift to spatial position, where the model must reason about the coarse layout of objects in a scene. Unlike OCR, spatial reasoning requires understanding semantic relationships between objects rather than local visual patterns. We ask whether learning to recognize spatial arrangements transfers to generating them, and vice versa.
+\input{fig/spatial_pos}
+
+\subsubsection{Experimental setting.} The pre-trained models already handle simple spatial relations such as left, right, top, and bottom reasonably well. We therefore focus on a more challenging setting: diagonal relations between two objects (e.g., top-left, top-right, bottom-right, bottom-left). Since existing spatial reasoning datasets~\cite{} lack the scale and complexity needed for fine-tuning, we construct a synthetic dataset of 200K samples from ImageNet~\cite{}. For each sample, we select two class-image pairs and place them on a canvas according to a randomly sampled diagonal direction. Each sample is paired with a prompt of the form \texttt{"[class A] is located in the [direction] of [class B]"}.
+\input{table/position_lumina}
+For evaluation, understanding is assessed by presenting images in the same format and asking the model to select the correct direction from multiple choices. For generation, we construct prompts in the same format as the training data. Following GenEval~\cite{ghosh2023geneval}, generated images are evaluated by applying a detection model to localize bounding boxes of the two objects. We compute the center points of the detected boxes and verify whether their relative position matches the specified direction.
+
+\subsubsection{Spatial knowledge transfers bi-directionally.} 
+Figure~\ref{fig:spatial_pos} summarizes the results. Training with the understanding objective alone improves generation accuracy. Training with the generation objective alone similarly improves understanding. The magnitude of transfer is comparable in both directions. This pattern is consistent with the quantity-aware reasoning results in Section~\ref{sec:umms} and contrasts with the asymmetric transfer observed in text recognition and generation.

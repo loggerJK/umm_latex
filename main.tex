@@ -78,6 +78,15 @@
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{wrapfig} 
+
+% -----------------------------사용자 정의 함수----------------------------------
+\usepackage{xcolor} % 색상 패키지 불러오기
+\definecolor{mygreen}{RGB}{0, 128, 0}
+\newcommand{\good}[1]{\textcolor{mygreen}{(#1)}} % 테이블용
+\newcommand{\bad}[1]{\textcolor{red}{(#1)}}
+
+
+
 \begin{document}
 
 % ---------------------------------------------------------------
@@ -111,7 +120,7 @@ ABC Institute, Rupert-Karls-University Heidelberg, Heidelberg, Germany\\
 
 
 \begin{abstract}
-    TBD
+Unified Multimodal Models (UMMs) that jointly handle visual understanding and generation within a single framework have gained significant attention. However, whether and how these two tasks mutually benefit each other through shared representations remains underexplored. In this work, we investigate bidirectional task transferability between understanding and generation in UMMs. Through systematic experiments—comparing joint training against single-task baselines and evaluating Und→Gen and Gen→Und transfer scenarios—we demonstrate that both directions exhibit positive transfer: understanding pretraining provides semantic priors that improve generation quality, while generation training enhances fine-grained visual representations that benefit understanding performance. Our findings suggest that understanding and generation are not competing objectives but complementary ones, and that representational bottlenecks, rather than inherent task conflicts, have been the primary obstacle to realizing their synergy in unified models.
   \keywords{First keyword \and Second keyword \and Third keyword}
 \end{abstract}
 
@@ -119,6 +128,7 @@ ABC Institute, Rupert-Karls-University Heidelberg, Heidelberg, Germany\\
 \input{sec/2_relworks}
 \input{sec/3_umms}
 \input{sec/4_tasks}
+\input{sec/5_discussion}
 
 
 % ---- Bibliography ----

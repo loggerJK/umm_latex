@@ -1,29 +1,84 @@
+% \begin{table*}[!t]
+% \centering
+% \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}c|cccccc}
+% \toprule
+% \textbf{Train} 
+% & \textbf{WER}
+% & \textbf{CER}
+% & \textbf{Edit Dist.}
+% & \textbf{BLEU}
+% & \textbf{METEOR}
+% & \textbf{F1}
+% \\
+% \midrule
+
+% \rowcolor{gray!15}
+% \multicolumn{7}{l}{\textit{Understanding: Text recognition}} \\
+
+% Baseline 
+% & 0.129 & 0.073 & 7.464 & 0.835 & 0.899 & 0.885 \\
+
+% Und. $\rightarrow$ Und.
+% & 0.091 & 0.042 & 4.276 & 0.875 & 0.928 & 0.912 \\
+
+% Gen. $\rightarrow$ Und.
+% & 0.118 & 0.061 & 6.232 & 0.845 & 0.907 & 0.892 \\
+
+% \midrule
+
+% \rowcolor{gray!15}
+% \multicolumn{7}{l}{\textit{Generation: Text generation}} \\
+
+% Baseline
+% & 0.654 & 0.362 & 36.812 & 0.277 & 0.403 & 0.446 \\
+
+% Und. $\rightarrow$ Gen.
+% & 0.641 & 0.351 & 35.636 & 0.274 & 0.410 & 0.452 \\
+
+% Gen. $\rightarrow$ Gen.
+% & 0.641 & 0.367 & 37.312 & 0.354 & 0.533 & 0.525 \\
+
+% \bottomrule
+% \end{tabular*}
+% \caption{Transferability between understanding and generation for the OCR task (Lumina).}
+% \label{tab:ocr_transfer}
+% \end{table*}
+
 \begin{table*}[!t]
 \centering
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}cc|cccccc}
-\toprule
-\multicolumn{2}{c|}{\textbf{Train $\rightarrow$ Test}} 
-& \textbf{WER}
-& \textbf{CER}
-& \textbf{Edit Dist.}
-& \textbf{BLEU}
-& \textbf{METEOR}
-& \textbf{F1}
-\\
-\midrule
-
-\multirow{2}{*}{Baseline} 
-& Und. &  &  &  &  &  &   \\
-& Gen. &  &  &  &  &  &   \\
-\midrule
-
-\multicolumn{2}{c|}{Und. $\rightarrow$ Und.} &  &  &  &  &  &  \\
-\multicolumn{2}{c|}{Und. $\rightarrow$ Gen.} &  &  &  &  &  &  \\
-\midrule
-\multicolumn{2}{c|}{Gen. $\rightarrow$ Und.} &  &  &  &  &  &  \\
-\multicolumn{2}{c|}{Gen. $\rightarrow$ Gen.} &  &  &  &  &  &  \\
-\bottomrule
-\end{tabular*}
-\caption{OCR results of Lumina}
-\label{tab:transfer}
+\resizebox{\textwidth}{!}{%
+    \begin{tabular}{c|cccccc}
+    \toprule
+    \textbf{Train} 
+    & \textbf{WER}~$\downarrow$
+    & \textbf{CER}~$\downarrow$
+    & \textbf{Edit Dist.}~$\downarrow$
+    & \textbf{BLEU}~$\uparrow$
+    & \textbf{METEOR}~$\uparrow$
+    & \textbf{F1}~$\uparrow$
+    \\
+    \midrule
+    \rowcolor{gray!15}
+    \multicolumn{7}{l}{\textit{Understanding: Text recognition}} \\
+    Baseline 
+    & 0.129 & 0.073 & 7.464 & 0.835 & 0.899 & 0.885 \\
+    Und. $\rightarrow$ Und.
+    & 0.091 \good{-0.038} & 0.042 \good{-0.031} & 4.276 \good{-3.188} & 0.875 \good{+0.040} & 0.928 \good{+0.029} & 0.912 \good{+0.027} \\
+    Gen. $\rightarrow$ Und.
+    & 0.118 \good{-0.011} & 0.061 \good{-0.012} & 6.232 \good{-1.232} & 0.845 \good{+0.010} & 0.907 \good{+0.008} & 0.892 \good{+0.007} \\
+    \midrule
+    \rowcolor{gray!15}
+    \multicolumn{7}{l}{\textit{Generation: Text generation}} \\
+    Baseline
+    & 0.654 & 0.362 & 36.812 & 0.277 & 0.403 & 0.446 \\
+    Und. $\rightarrow$ Gen.
+    & 0.641 \good{-0.013} & 0.351 \good{-0.011} & 35.636 \good{-1.176} & 0.274 \bad{-0.003} & 0.410 \good{+0.007} & 0.452 \good{+0.006} \\
+    Gen. $\rightarrow$ Gen.
+    & 0.641 \good{-0.013} & 0.367 \bad{+0.005} & 37.312 \bad{+0.500} & 0.354 \good{+0.077} & 0.533 \good{+0.130} & 0.525 \good{+0.079} \\
+    \bottomrule
+    \end{tabular}
+}
+\vspace{10pt}
+\caption{Transferability for text recognition and text generation. Text recognition (understanding) is evaluated by comparing model-predicted text against the ground truth using word error rate (WER), character error rate (CER), edit distance, BLEU, METEOR, and F1. Text generation is evaluated by applying an OCR model to the generated images and computing the same metrics between the extracted text and the original prompt.}
+\label{tab:ocr_transfer}
 \end{table*}
