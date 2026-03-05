@@ -48,9 +48,7 @@ Taken together, these cases illustrate a general principle. Understanding traini
 
 % This observation is consistent with prior analyses showing that understanding and generation demand distinct alignment patterns across network depth~\cite{li2025unifork}, and that joint optimization can lead to representational compromise. The seesaw behavior further motivates the sequential transfer strategy of Section~\ref{sec:finetune_strategy}: train on one objective, then rely on transfer for the other. This avoids representational conflict and yields stable improvements in both capabilities.
 
-Throughout this work, we have explored transferability in UMMs and confirmed that for certain tasks, knowledge learned through one objective can boost performance in the other direction. 
-
-Throughout this work, we examined whether knowledge learned under one objective in unified multimodal models can transfer to the other. Our experiments show that such transfer can occur. For several tasks, training with one objective improves performance when evaluated under the other. This naturally raises the question of whether training both objectives simultaneously leads to improved performance for both.
+Throughout this work, we have explored transferability in UMMs and confirmed that for certain tasks, knowledge learned through one objective can boost performance in the other direction. This naturally raises the question of whether training both objectives simultaneously leads to improved performance for both.
 
 To investigate this, we trained Lumina-DiMOO on counting understanding and generation jointly. As shown in Figure~\ref{fig:joint_training}, the two objectives do not improve together during training. Instead, their performance exhibits an oscillatory pattern. Understanding accuracy increases in the first half of training while generation accuracy declines, and the trend reverses in the latter half. This behavior suggests that the presence of transfer between objectives does not necessarily translate into consistent gains when the two are optimized simultaneously.
 
