@@ -40,7 +40,7 @@ Taken together, these cases illustrate a general principle. Understanding traini
 
 % Together, these two cases illustrate a general principle: understanding training acts as a \emph{semantic regularizer} that steers generation toward the target capability without corrupting the learned generative distribution. Transferability is therefore not merely an analytical finding—it is a practical fine-tuning strategy.
 
-\subsection{Joint training is not the answer}
+\subsection{(Joint training is not the answer..?)}
 \label{sec:joint_training}
 \input{fig/joint_training}
 
@@ -50,9 +50,9 @@ Taken together, these cases illustrate a general principle. Understanding traini
 
 Throughout this work, we have explored transferability in UMMs and confirmed that for certain tasks, knowledge learned through one objective can boost performance in the other direction. This naturally raises the question of whether training both objectives simultaneously leads to improved performance for both.
 
-To investigate this, we trained Lumina-DiMOO on counting understanding and generation jointly. As shown in Figure~\ref{fig:joint_training}, the two objectives do not improve together during training. Instead, their performance exhibits an oscillatory pattern. Understanding accuracy increases in the first half of training while generation accuracy declines, and the trend reverses in the latter half. This behavior suggests that the presence of transfer between objectives does not necessarily translate into consistent gains when the two are optimized simultaneously.
+To investigate this, we trained Lumina-DiMOO on counting understanding and generation jointly (\textit{und} + \textit{gen}), and result shown in Figure~\ref{fig:joint_training} indicate that the two objectives do not improve together during training. Instead, their performance exhibits an oscillatory pattern. Understanding accuracy increases in the first half of training while generation accuracy declines, and the trend reverses in the latter half. This behavior suggests that the presence of transferability does not necessarily translate into consistent gains when the two are optimized simultaneously.
 
-One possible explanation is that understanding and generation require different alignment patterns within the network, which may produce conflicting optimization signals during joint training~\cite{li2025unifork}. At the same time, the specifics of our experimental setting may also play a role. Our study relies on post-training with tightly paired and concept-focused data, which differs from the heterogeneous data distributions used in large-scale multimodal pre-training. Such a training regime may make joint optimization more difficult. Understanding under what conditions joint training leads to complementary improvements remains an open question.
+One possible explanation is that understanding and generation require different alignment patterns within the network, which may lead to conflicting optimization signals during joint training, as suggested by~\cite{li2025unifork}. At the same time, our experimental setting may limit how clearly synergy can be observed. Our experiments are conducted as post-training on a pretrained model whose capabilities are already largely established, which may lead to different training dynamics from those that arise during large-scale pre-training. In addition, the joint training uses the same concept-focused dataset constructed for the individual experiments in Section~\ref{sec:umms}, where each image–text pair is tightly aligned around a specific concept. Such perfectly paired data distributions are uncommon in typical multimodal pre-training corpora and may introduce an unfamiliar training configuration when the two objectives are optimized together. Distinguishing between these possibilities is difficult within the scope of post-training experiments and therefore remains an open question.
 
 \subsection{Importance of regularization: LoRA vs.\ full fine-tuning}
 \label{sec:lora_vs_full}
