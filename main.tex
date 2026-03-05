@@ -79,7 +79,8 @@
 
 % ---------------------------------------------------------------
 % TODO REVIEW: Replace with your title
-\title{UMM Transferability} 
+\title{\textbf{Understanding–Generation Transfer in Unified Multimodal Models}
+} 
 
 % TODO REVIEW: If the paper title is too long for the running head, you can set
 % an abbreviated paper title here. If not, comment out.
@@ -108,7 +109,8 @@ ABC Institute, Rupert-Karls-University Heidelberg, Heidelberg, Germany\\
 
 
 \begin{abstract}
-Unified Multimodal Models (UMMs) that jointly handle visual understanding and generation within a single framework have gained significant attention. However, whether and how these two tasks mutually benefit each other through shared representations remains underexplored. In this work, we investigate bidirectional task transferability between understanding and generation in UMMs. Through systematic experiments—comparing joint training against single-task baselines and evaluating Und→Gen and Gen→Und transfer scenarios—we demonstrate that both directions exhibit positive transfer: understanding pretraining provides semantic priors that improve generation quality, while generation training enhances fine-grained visual representations that benefit understanding performance. Our findings suggest that understanding and generation are not competing objectives but complementary ones, and that representational bottlenecks, rather than inherent task conflicts, have been the primary obstacle to realizing their synergy in unified models.
+Unified Multimodal Models (UMMs)  aim to integrate multimodal understanding and image generation within a single architecture. While recent models demonstrate strong performance on both tasks, it remains under-studies how the two objectives interact once they are jointly trained. In this work, we study \textbf{transferability} as a direct indicator of cross-task interaction in UMMs. Specifically, we investigate whether training a capability in one modality (understanding or generation) can improve performance on the same capability in the other modality without explicit supervision through controlled experiments. We then find that transferability strongly depends on architectural design: models with fully shared transformer backbones and unified visual tokenizer exhibit consistent cross-modal transfer, while loosely coupled architectures show little or no transfer. Building on this observation, we demonstrate that transferability can be exploited as a practical mechanism for improving generative capabilities. Instead of directly training generation for a target capability, we train the corresponding understanding task and allow the knowledge to transfer into generation. This approach improves task-specific generation performance while largely preserving generative quality, which is often difficult to achieve through direct generation fine-tuning. We validate this phenomenon across multiple visual capabilities, including counting, spatial relation reasoning, and OCR. Our results show that cross-modal transfer is not merely an artifact of joint training, but a property that can be systematically analyzed and leveraged in Unified Multimodal Models.
+
 \keywords{Unified Multimodal Models \and Cross-Task Transferability \and Image Understanding \and Image Generation \and Multimodal Representation Learning}
   % \keywords{First keyword \and Second keyword \and Third keyword}
 \end{abstract}
