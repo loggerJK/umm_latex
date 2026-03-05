@@ -56,6 +56,8 @@
     & \textbf{BLEU}~$\uparrow$
     & \textbf{METEOR}~$\uparrow$
     & \textbf{F1}~$\uparrow$
+    % & \textbf{IS}~$\uparrow$
+    % & \textbf{FID}~$\downarrow$
     \\
     \midrule
     % \rowcolor{gray!15}
@@ -79,7 +81,8 @@
     \bottomrule
     \end{tabular}
 }
-\vspace{10pt}
-\caption{Transferability for text recognition and text generation. Text recognition (understanding) is evaluated by comparing model-predicted text against the ground truth using word error rate (WER), character error rate (CER), edit distance, BLEU, METEOR, and F1. Text generation is evaluated by applying an OCR model to the generated images and computing the same metrics between the extracted text and the original prompt.}
+% \vspace{10pt}
+\caption{\textbf{Transferability for text generation.} We apply an OCR model to the generated images and compute WER, CER, edit distance, BLEU, METEOR, and F1 between the extracted text and the original prompt.}
+\vspace{-30pt}
 \label{tab:ocr_transfer}
 \end{table*}

@@ -63,23 +63,25 @@
 \begin{table}[t]
     \centering
     \setlength{\tabcolsep}{6pt}
+    \renewcommand{\arraystretch}{0.85}
     \begin{tabular}{c|cccc}
         \toprule
         \textbf{Train $\rightarrow$ Gen.}
         & \textbf{Acc.}~$\uparrow$
-        & \textbf{IS}~$\uparrow$
-        & \textbf{FID}~$\downarrow$
+        & \textbf{IS}~\cite{salimans2016isscore}~$\uparrow$
+        & \textbf{FID}~\cite{heusel2017fid}~$\downarrow$
         \\
         \midrule
         Baseline
-        & 0.67 & 16.86 & 39.16 \\
+        & 0.67 & 16.86 & - \\
         Und. $\rightarrow$ Gen.
-        & 0.74 \good{+0.07}  & \textbf{17.55} \good{+0.69} & \textbf{31.47} \good{-7.69} \\
+        & 0.74 \good{+0.07}  & 17.50 &  30.95  \\
         Gen. $\rightarrow$ Gen.
-        & \textbf{0.80} \good{+0.13} & 15.29 \bad{-1.57} & 52.51 \bad{+13.35} \\
+        & \textbf{0.80} \good{+0.13} &  17.412  &  32.28 \\
         \bottomrule
     \end{tabular}
-    \vspace{6pt}
-    \caption{\textbf{Image quality of spatial relation generation (Lumina-DiMOO).} }
+    % \vspace{6pt}
+    \caption{\textbf{Image quality of spatial relation generation.} }
+    \vspace{-20pt}
     \label{tab:gen_quality_spatial}
 \end{table}

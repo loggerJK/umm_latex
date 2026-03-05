@@ -1,6 +1,9 @@
+
 \begin{table}[t]
     \centering
-    \setlength{\tabcolsep}{6pt}
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{0.95}
     \begin{tabular}{c|cccc}
         \toprule
         \textbf{Train (\textit{und})} 
@@ -10,15 +13,14 @@
         & \textbf{MME}~\cite{fu2023mme}
         \\
         \midrule
-        Baseline
-        & 86.7 & 90.8 & 57.7 & 1534\\
+        Baseline & 86.7 & 90.8 & 57.7 & 1534\\
         Counting & 86.4 & 90.9 & 62.0 & 1492\\
         Spatial Relation & 87.3 & 90.8 & 61.3 & 1554\\
         Text recognition & 86.7 & 90.5 & 61.3 & 1538 \\
         \bottomrule
     \end{tabular}
     \vspace{6pt}
-    \caption{\textbf{Performance on general multimodal benchmarks after understanding-based training.}}
+    \caption{\textbf{Performance on general multimodal benchmarks after understanding-based training.} Despite of und->gen transferability, }
     \label{tab:general_bench}
     \vspace{-20pt}
 \end{table}
