@@ -2,7 +2,10 @@
 
 % ---------------------------------------------------------------
 % Include basic ECCV package
- 
+
+% Pass xcolor options before eccv loads it
+\PassOptionsToPackage{table}{xcolor}
+
 % TODO REVIEW: Insert your submission number below by replacing '*****'
 % TODO FINAL: Comment out the following line for the camera-ready version
 \usepackage[review,year=2026,ID=15]{eccv}
@@ -45,15 +48,11 @@
 % TODO FINAL: Un-comment the following line for the camera-ready version
 \usepackage{hyperref}
 \usepackage{lipsum}
-\usepackage{booktabs}
 % Support for ORCID icon
 \usepackage{orcidlink}
 
-\usepackage{hyperref}
 \usepackage{url}
-
 \usepackage{colortbl}
-\usepackage{xcolor}
 \usepackage{multirow}
 \usepackage{subcaption}
 \usepackage{amssymb}
@@ -65,22 +64,10 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{booktabs} % for better tables
-\usepackage{array} % for better column formatting
-\usepackage{pifont}
-\usepackage{array}
 \usepackage{mwe}
-
-\usepackage[table]{xcolor}
-\usepackage{colortbl}
-\usepackage{graphicx}
-\usepackage{booktabs}
-\usepackage{multirow}
-\usepackage{wrapfig} 
+\usepackage{wrapfig}
 
 % -----------------------------사용자 정의 함수----------------------------------
-\usepackage{xcolor} % 색상 패키지 불러오기
 \definecolor{mygreen}{RGB}{0, 128, 0}
 \newcommand{\good}[1]{\textcolor{mygreen}{(#1)}} % 테이블용
 \newcommand{\bad}[1]{\textcolor{red}{(#1)}}
