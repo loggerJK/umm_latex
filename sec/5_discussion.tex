@@ -8,6 +8,32 @@ For counting and spatial relations, the key attributes are coarse semantic signa
 
 In contrast, text recognition and text generation exhibit an asymmetric transfer pattern. A generation objective requires the model to synthesize individual characters with pixel-level fidelity, and the resulting fine-grained character representations transfer naturally to recognition. The reverse direction is comparatively weaker. While prior studies report that recognition training can facilitate text generation~\cite{ji2023improving, fang2025recognsyn, min2025tair}, we also observe only limited transfer from understanding to generation in this setting. A plausible explanation is that recognition-oriented training primarily emphasizes high-level textual content and identity, whereas text generation additionally demands low-level, spatially precise rendering details. Consequently, semantic knowledge extracted from recognition alone is insufficient to fully bridge the gap to pixel-accurate character synthesis. Overall, our findings indicate that when the shared concept requires fine-grained, pixel-level precision, semantic representations from understanding provide only partial support for generation.
 
-\subsection{}
-% transferability 의 application potential
+\subsection{Transferability as a practical fine-tuning strategy}
+\label{sec:finetune_strategy}
+
+The preceding analysis characterizes \emph{when} transfer occurs. We now argue that transfer can be deliberately exploited: when the goal is to improve a specific generation capability, training via understanding and relying on transfer (Und.\ $\rightarrow$ Gen.) can be preferable to direct generation fine-tuning.
+
+\paragraph{Counting: Und.\ training is Pareto-dominant.}
+Consider Lumina-DiMOO on counting generation. The Und.\ $\rightarrow$ Gen.\ and Gen.\ $\rightarrow$ Gen.\ conditions achieve the same accuracy (0.57), while Und.\ $\rightarrow$ Gen.\ yields a lower MAD (0.83 vs.\ 0.91). More strikingly, image quality diverges: Und.\ $\rightarrow$ Gen.\ attains an Inception Score (IS) of 17.55 and FID of 31.47, both superior to the baseline (IS 16.86, FID 39.16). In contrast, Gen.\ $\rightarrow$ Gen.\ degrades both metrics substantially (IS 15.29, FID 52.51). Understanding training thus provides the same task-level improvement at no cost to—and even a benefit for—perceptual quality, making it Pareto-dominant over direct generation training.
+
+\paragraph{Spatial position: Und.\ training as a safer strategy.}
+For spatial position (Table~\ref{tab:spatial_position_transfer}), Gen.\ $\rightarrow$ Gen.\ is numerically stronger (81.25\% vs.\ 73.75\%). An error decomposition reveals that generation training reduces both detection failures (47 $\rightarrow$ 34) and position errors (84 $\rightarrow$ 41), whereas understanding training primarily lowers position errors (84 $\rightarrow$ 64) while detection failures decrease only modestly (47 $\rightarrow$ 41). However, because the training data is synthetic (composited ImageNet crops), direct generation supervision causes the model to overfit to the synthetic distribution—generated images lose visual realism and diversity (see Figure~\ref{fig:spatial_pos}). In many practical scenarios, synthetic data is the only available supervision for generation, and training directly on it risks distribution collapse. Understanding training sidesteps this problem entirely: the model never optimizes pixel-level generation on synthetic images, so generative diversity is preserved while spatial reasoning still improves meaningfully via transfer.
+
+Together, these two cases illustrate a general principle: understanding training acts as a \emph{semantic regularizer} that steers generation toward the target capability without corrupting the learned generative distribution. Transferability is therefore not merely an analytical finding—it is a practical fine-tuning strategy.
+
+\subsection{Joint training is not the answer}
+\label{sec:joint_training}
+\input{fig/joint_training}
+
+A natural response to the above observation is to ask: why not train on both objectives simultaneously? We find that joint Und.+Gen.\ training introduces \emph{seesaw interference} between the two objectives. Figure~\ref{fig:joint_training} shows Lumina-DiMOO trained with both counting understanding and generation losses over 30 epochs. During the first ${\sim}$15 epochs, understanding accuracy rises while generation accuracy declines; during the latter half, generation recovers at the expense of understanding. The two objectives oscillate in opposition, competing for representational capacity even within a low-rank LoRA adapter.
+
+This observation is consistent with prior analyses showing that understanding and generation demand distinct alignment patterns across network depth~\cite{li2025unifork}, and that joint optimization can lead to representational compromise. The seesaw behavior further motivates the sequential transfer strategy of Section~\ref{sec:finetune_strategy}: train on one objective, then rely on transfer for the other. This avoids representational conflict and yields stable improvements in both capabilities.
+
+
+\subsection{Importance of regularization: LoRA vs.\ full fine-tuning}
+\label{sec:lora_vs_full}
+
+The transfer results reported throughout this paper rely on LoRA fine-tuning. We now show that this choice of regularization is not incidental—it is critical. In an additional experiment with Janus-Pro, we compare LoRA fine-tuning (rank 128) against full fine-tuning of the transformer backbone (with the language modeling head frozen). Under full fine-tuning, generation collapses entirely: the model produces no coherent images despite the generation head remaining untouched. LoRA fine-tuning, by contrast, yields stable training and the transfer patterns reported in Table~\ref{tab:transfer}.
+
+The explanation is straightforward. LoRA constrains parameter updates to a low-rank subspace, acting as implicit regularization that preserves the pretrained generative representations. Full fine-tuning permits unconstrained parameter drift across the entire backbone, catastrophically disrupting the learned visual-generative mappings. For UMMs, regularization is not optional—it determines whether the model retains its multimodal capabilities at all.
 
