@@ -1,22 +1,21 @@
-
 \begin{table}[t]
-\centering
-\small
-\setlength{\extrarowheight}{-0.5pt}
-\renewcommand{\arraystretch}{0.8}
-\setlength{\tabcolsep}{1.1mm}
-\resizebox{\columnwidth}{!}{
-\begin{tabular}{c|ccc}
-\toprule
- & POPE & MMMU & MMBench \\
-\midrule
-Baseline &  &  &  \\
-% \midrule
-Baseline &  &  &  \\
-Baseline &  &  &  \\
-\bottomrule
-\end{tabular}}
-\caption{\textbf{Effects of different VFMs.} Performance of $\mathcal{L}_\text{VRA}$ with different VFMs across benchmarks.}
-\label{tab:vfm_select}
-\vspace{-2pt}
+    \centering
+    \setlength{\tabcolsep}{6pt}
+    \begin{tabular}{c|ccc}
+        \toprule
+        \textbf{Train (Und.)} 
+        & \textbf{POPE}
+        & \textbf{MMBench}
+        & \textbf{MMMU}
+        \\
+        \midrule
+        Baseline
+        & 86.7 & 90.8 & 57.7 \\
+        Counting & 86.4 & 90.9 & 62.0 \\
+        Spatial Relation &  &  &  \\
+        \bottomrule
+    \end{tabular}
+    \vspace{6pt}
+    \caption{\textbf{General Benchmark}}
+    \label{tab:general_bench}
 \end{table}
