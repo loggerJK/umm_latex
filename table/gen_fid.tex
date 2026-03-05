@@ -1,0 +1,26 @@
+\begin{wraptable}{r}{0.48\textwidth}
+    \centering
+    \vspace{-20pt}
+    \resizebox{0.46\textwidth}{!}{%
+        \begin{tabular}{c|cccc}
+            \toprule
+            \textbf{Train $\rightarrow$ Gen.}
+            & \textbf{Acc.}~$\uparrow$
+            & \textbf{MAD}~$\downarrow$
+            & \textbf{IS}~$\uparrow$
+            & \textbf{FID}~$\downarrow$
+            \\
+            \midrule
+            Baseline
+            & 0.48 & 1.11 & 16.86 & 39.16 \\
+            Und. $\rightarrow$ Gen.
+            & \textbf{0.57} \good{+0.09} & \textbf{0.83} \good{-0.28} & \textbf{17.55} \good{+0.69} & \textbf{31.47} \good{-7.69} \\
+            Gen. $\rightarrow$ Gen.
+            & 0.57 \good{+0.09} & 0.91 \good{-0.20} & 15.29 \bad{-1.57} & 52.51 \bad{+13.35} \\
+            \bottomrule
+        \end{tabular}
+    }
+    \caption{\textbf{Image quality of counting generation (Lumina-DiMOO).} Und.\ training matches Gen.\ training in task accuracy while preserving image quality (IS, FID). Direct Gen.\ training degrades both metrics.}
+    \label{tab:gen_quality}
+    \vspace{-15pt}
+\end{wraptable}
