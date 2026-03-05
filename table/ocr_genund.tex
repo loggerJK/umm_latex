@@ -1,0 +1,28 @@
+\begin{table*}[t]
+\centering
+\resizebox{\textwidth}{!}{%
+    \begin{tabular}{c|cccccc}
+    \toprule
+    \textbf{Train} 
+    & \textbf{WER}~$\downarrow$
+    & \textbf{CER}~$\downarrow$
+    & \textbf{Edit Dist.}~$\downarrow$
+    & \textbf{BLEU}~$\uparrow$
+    & \textbf{METEOR}~$\uparrow$
+    & \textbf{F1}~$\uparrow$
+    \\
+    \midrule
+    Baseline 
+    & 0.129 & 0.073 & 7.464 & 0.835 & 0.899 & 0.885 \\
+        \midrule
+    \textit{und} $\rightarrow$ \textit{und}
+    & 0.091 \good{-0.038} & 0.042 \good{-0.031} & 4.276 \good{-3.188} & 0.875 \good{+0.040} & 0.928 \good{+0.029} & 0.912 \good{+0.027} \\
+    \textit{gen} $\rightarrow$ \textit{und}
+    & 0.118 \good{-0.011} & 0.061 \good{-0.012} & 6.232 \good{-1.232} & 0.845 \good{+0.010} & 0.907 \good{+0.008} & 0.892 \good{+0.007} \\
+    \rowcolor{gray!15}
+    \bottomrule
+    \end{tabular}
+}
+\caption{tbd}
+\label{tab:ocr_transfer_genund}
+\end{table*}

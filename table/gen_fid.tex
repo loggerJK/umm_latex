@@ -3,7 +3,7 @@
 %     \resizebox{0.7\textwidth}{!}{%
 %         \begin{tabular}{c|cccc}
 %             \toprule
-%             \textbf{Train $\rightarrow$ Gen.}
+%             \textbf{Train $\rightarrow$ \textit{gen}}
 %             & \textbf{Acc.}~$\uparrow$
 %             & \textbf{MAD}~$\downarrow$
 %             & \textbf{IS}~$\uparrow$
@@ -12,15 +12,15 @@
 %             \midrule
 %             Baseline
 %             & 0.48 & 1.11 & 16.86 & 39.16 \\
-%             Und. $\rightarrow$ Gen.
+%             \textit{und} $\rightarrow$ \textit{gen}
 %             & \textbf{0.57} \good{+0.09} & \textbf{0.83} \good{-0.28} & \textbf{17.55} \good{+0.69} & \textbf{31.47} \good{-7.69} \\
-%             Gen. $\rightarrow$ Gen.
+%             \textit{gen} $\rightarrow$ \textit{gen}
 %             & 0.57 \good{+0.09} & 0.91 \good{-0.20} & 15.29 \bad{-1.57} & 52.51 \bad{+13.35} \\
 %             \bottomrule
 %         \end{tabular}
 %     }
 %     \vspace{10pt}
-%     \caption{\textbf{Image quality of counting generation (Lumina-DiMOO).} Und.\ training matches Gen.\ training in task accuracy while preserving image quality (IS, FID). Direct Gen.\ training degrades both metrics.}
+%     \caption{\textbf{Image quality of counting generation (Lumina-DiMOO).} \textit{und}\ training matches \textit{gen}\ training in task accuracy while preserving image quality (IS, FID). Direct \textit{gen}\ training degrades both metrics.}
 %     \label{tab:gen_quality}
 
 % \end{table}
@@ -30,7 +30,7 @@
     \setlength{\tabcolsep}{6pt}
     \begin{tabular}{c|cccc}
         \toprule
-        \textbf{Train $\rightarrow$ Gen.}
+        \textbf{Train $\rightarrow$ Test}
         & \textbf{Acc.}~$\uparrow$
         & \textbf{MAD}~$\downarrow$
         & \textbf{IS}~$\uparrow$
@@ -39,13 +39,13 @@
         \midrule
         Baseline
         & 0.48 & 1.11 & 16.86 & 39.16 \\
-        Und. $\rightarrow$ Gen.
+        \textit{und} $\rightarrow$ \textit{gen}
         & \textbf{0.57} \good{+0.09} & \textbf{0.83} \good{-0.28} & \textbf{17.55} \good{+0.69} & \textbf{31.47} \good{-7.69} \\
-        Gen. $\rightarrow$ Gen.
+        \textit{gen} $\rightarrow$ \textit{gen}
         & 0.57 \good{+0.09} & 0.91 \good{-0.20} & 15.29 \bad{-1.57} & 52.51 \bad{+13.35} \\
         \bottomrule
     \end{tabular}
-    \vspace{6pt}
-    \caption{\textbf{Image quality of counting generation (Lumina-DiMOO).} Und.\ training matches Gen.\ training in task accuracy while preserving image quality (IS, FID). Direct Gen.\ training degrades both metrics.}
+    % \vspace{-20pt}
+    \caption{\textbf{Image quality of counting generation (Lumina-DiMOO).} \ training matches \textit{gen}\ training in task accuracy while preserving image quality (IS, FID). Direct \textit{gen}\ training degrades both metrics.}
     \label{tab:gen_quality}
 \end{table}

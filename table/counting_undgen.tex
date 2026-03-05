@@ -1,17 +1,23 @@
 \begin{wraptable}[11]{r}{0.4\textwidth}
     \centering
-    \resizebox{0.3\textwidth}{!}{%
-        \begin{tabular}{c|cㅊ}
+    \resizebox{0.4\textwidth}{!}{%
+        \begin{tabular}{c|cc}
             \toprule
             \textbf{Train} 
-            & \textbf{Acc.}~$\uparrow$ & MAD \textbf{Acc.}~$\downarrow$
-            \\
+            & \textbf{Acc.} $\uparrow$ 
+            & \textbf{MAD} $\downarrow$ \\
             \midrule
-            \rowcolor{gray!15}
-            \multicolumn{2}{l}{\textit{Generation}} \\
+            % \rowcolor{gray!15}
+            % \multicolumn{3}{l}{\textit{Generation}} \\
             Baseline & 48.0 & 1.11 \\
-            \textit{und} $\rightarrow$ \textit{gen} & 57.0 & 0.83 \\
-            \textit{gen} $\rightarrow$ \textit{gen}. & & \\
+            \midrule
+            \textit{und} $\rightarrow$ \textit{gen} 
+            & 57.0 \good{\textbf{+9.0}} 
+            & 0.83 \good{\textbf{-0.28}} \\
+            
+            \textit{gen} $\rightarrow$ \textit{gen} 
+            & 57.0 \good{+9.0} 
+            & 0.91 \good{-0.20} \\
             \bottomrule
         \end{tabular}
     }
