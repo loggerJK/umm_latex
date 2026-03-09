@@ -1,10 +1,15 @@
 \appendix
+\etocdepthtag.toc{appendix} % 여기서부터 부록 시작임을 태그 지정
 \section*{\Large Appendix}
 
-% \mtcsettitle{parttoc}{}
-% \part{~}
+\etocsetlevel{author}{6}
+\etocsetlevel{title}{6}
+
 % \section*{Contents}
-% \parttoc         % ← 부록 전용 TOC를 여기서 출력
+% 부록 페이지만 표시하도록 필터링
+\etocsettagdepth{main}{none}      % 본문 태그는 표시 안 함
+\etocsettagdepth{appendix}{subsection} % 부록 태그는 표시함
+\tableofcontents % 필터링된 전체 목차를 출력
 
 \section{Experimental Details}
 \label{sec:appendix_experimental_details}
