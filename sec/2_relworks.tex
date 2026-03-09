@@ -4,12 +4,17 @@
 % 모델 아키텍쳐 위주로
 The success of large language models~\cite{floridi2020gpt, touvron2023llama} has catalyzed the extension of language modeling into the multimodal domain. Multimodal large language models (MLLMs)~\cite{bai2025qwen3, chen2024internvl, guo2025deepseek, liu2023visual} enable strong image understanding by pairing a visual encoder with an LLM. More recently, Unified Multimodal Models (UMMs) have pushed this paradigm further by incorporating image generation alongside understanding within a single model~\cite{team2024chameleon, wu2025janus, deng2025bagel, xin2025lumina, chen2505blip3}.
 
+
+\vspace{-10pt}
 \subsubsection{Visual representations.}
 A key design axis in UMMs is the choice of visual representation for encoding input images. One line of work adopts language-supervised encoders such as CLIP~\cite{radford2021clip} and SigLIP~\cite{zhai2023sigmoid}, whose representations are aligned with text and thus preserve high-level semantics amenable to reasoning. A complementary line leverages autoencoders originally designed for generation, such as VQ-VAE~\cite{van2017neural} or continuous VAE~\cite{kingma2013vae}, which prioritize pixel-level reconstruction fidelity. Analyses in Janus~\cite{chen2025januspro,wu2025janus} and related works~\cite{tong2024cambrian} show that language-supervised representations substantially outperform compression-oriented tokenizers for understanding tasks, motivating several UMMs to employ separate encoders for each modality direction.
 
+
+\vspace{-10pt}
 \subsubsection{Generation objectives.}
 Image generation in UMMs follows two main paradigms. \emph{Autoregressive} models~\cite{team2024chameleon, cui2025emu3} employ discrete image tokenizers and generate tokens sequentially, directly extending the next-token prediction framework of LLMs. \emph{Diffusion}-based models instead learn a denoising objective~\cite{ho2020ddpm, song2020ddim, lipman2022flow} and can be further divided into discrete-token diffusion~\cite{yang2025mmada, xin2025lumina}, which applies masked or absorbing-state diffusion over quantized codes, and continuous diffusion~\cite{zhou2024transfusion, chen2505blip3}, which operates on continuous latent representations.
 
+\vspace{-10pt}
 \subsubsection{Architectural taxonomy.}
 We identify three dominant architecture families (Figure~\ref{fig:arch_categorize}). \textbf{(1) Single transformer} designs route all modalities through a shared transformer backbone, maximizing parameter sharing~\cite{team2024chameleon, cui2025emu3, wang2024emu3}. \textbf{(2) Decoupled transformer} designs employ separate transformers for language and vision, where the LLM provides conditioning signals (\eg, hidden states) that are subsequently fed into a dedicated diffusion module for generation~\cite{pan2025meataquery, tong2025metamorph}. \textbf{(3) Mixture-of-Transformers (MoT)} designs maintain modality-specific transformer branches but couple them through joint or cross-attention layers, allowing selective parameter sharing while retaining specialized capacity~\cite{deng2025bagel,li2025unifork,wang2025lightfusion, wang2025hbridge}.
 % As we show in Section~\ref{sec:umms}, this architectural choice has a decisive impact on whether knowledge transfers across understanding and generation. We visually present the architectural trend in Figure.~\ref{fig:arch_categorize}

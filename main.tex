@@ -28,7 +28,7 @@
 \usepackage{booktabs}
 
 % The "axessiblity" package can be found at: https://ctan.org/pkg/axessibility?lang=en
-\usepackage[accsupp]{axessibility}  % Improves PDF readability for those with disabilities.
+% \usepackage[accsupp]{axessibility}  % Improves PDF readability for those with disabilities.
 
 
 % ---------------------------------------------------------------
@@ -67,6 +67,11 @@
 \usepackage{mwe}
 \usepackage{wrapfig}
 
+
+% \usepackage[toc,page,header]{appendix}
+\usepackage{minitoc}
+% \renewcommand{\thepart}{}
+% \renewcommand{\partname}{}
 % -----------------------------사용자 정의 함수----------------------------------
 \definecolor{mygreen}{RGB}{0, 128, 0}
 \newcommand{\good}[1]{\textcolor{mygreen}{\scriptsize{(#1)}}} % 테이블용
@@ -105,6 +110,10 @@ Springer Heidelberg, Tiergartenstr.~17, 69121 Heidelberg, Germany
 ABC Institute, Rupert-Karls-University Heidelberg, Heidelberg, Germany\\
 \email{\{abc,lncs\}@uni-heidelberg.de}}
 
+\doparttoc
+\faketableofcontents
+\part{}
+
 \maketitle
 
 
@@ -124,11 +133,15 @@ Unified Multimodal Models (UMMs) integrate understanding and generation within a
 \input{sec/5_discussion}
 \input{sec/6_conclusion}
 
+
 % ---- Bibliography ----
 %
+
 % BibTeX users should specify bibliography style 'splncs04'.
 % References will then be sorted and formatted in the correct style.
 %
 \bibliographystyle{splncs04}
 \bibliography{main}
+\clearpage
+\input{appendix}
 \end{document}

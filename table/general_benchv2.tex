@@ -26,18 +26,21 @@
 %     \vspace{-20pt}
 % \end{table}
 
+
+
 \begin{table}[t]
     \centering
     % \small
     % \setlength{\tabcolsep}{4pt}
     % \renewcommand{\arraystretch}{0.8}
-    \begin{tabular}{ccccc}
+    \begin{tabular}{c|cccc}
         \toprule
-        % \textbf{Train (\textit{und})} 
+       \rowcolor{white}
+        \textbf{Train (\textit{und})} 
         & \textbf{POPE}~\cite{li2023pope}
         & \textbf{MMBench}~\cite{liu2024mmbench}
         & \textbf{MMMU}~\cite{yue2024mmmu}
-        & \textbf{MME}~\cite{fu2023mme}
+        & \textbf{MME-P}~\cite{fu2023mme}
         \\
         \midrule
         Baseline & 86.7 & 90.8 & 57.7 & 1534\\
@@ -50,8 +53,13 @@
     % \caption{\textbf{Performance on general multimodal benchmarks after understanding-based training.} Despite of \textit{und}~$\rightarrow$~\textit{gen} transferability, }
     \caption{\textbf{Performance on general multimodal benchmarks after understanding-based training.} Despite introducing task-specific capabilities through understanding training for \textit{und}~$\rightarrow$~\textit{gen} transfer, the model's general multimodal understanding remains largely preserved across all benchmarks.}
     \label{tab:general_bench}
-    \vspace{-20pt}
+    \vspace{-10pt}
 \end{table}
+
+
+% \begin{table}[t]
+
+  % % % % % 
 
 % 레퍼런스
 %  \caption{\textbf{Performance on general multimodal benchmarks after understanding-based training.} Despite introducing task-specific capabilities through understanding training for \textit{und}~$\rightarrow$~\textit{gen} transfer, the model's general multimodal understanding remains largely preserved across all benchmarks.}

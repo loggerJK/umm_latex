@@ -1,4 +1,5 @@
 \section{Discussion}
+\input{fig/ocr_undgen}
 % \subsection{(what determines transferability?)}
 While our experiments demonstrate that understanding-to-generation transfer can effectively improve generative capabilities, several natural questions remain. In this section, we further analyze the properties and implications of transferability in UMMs. We first investigate whether the reverse direction, \textit{i.e.}, generation-to-understanding transfer, can also provide meaningful improvements. We then examine whether jointly training understanding and generation tasks could serve as an alternative to transfer-based training. Finally, we analyze whether understanding based training negatively affects general multimodal understanding ability.
 
@@ -41,10 +42,10 @@ Throughout this work, we have explored transferability in UMMs and confirmed tha
 
 To investigate this, we trained Lumina-DiMOO on counting understanding and generation jointly (\textit{und} + \textit{gen}), and result shown in Figure~\ref{fig:joint_training} indicate that the two objectives do not improve together during training. Instead, their performance exhibits an oscillatory pattern. Understanding accuracy increases in the first half of training while generation accuracy declines, and the trend reverses in the latter half. This behavior suggests that the presence of transferability does not necessarily translate into consistent gains when the two are optimized simultaneously.
 
+
 One possible explanation is that understanding and generation require different alignment patterns within the network, which may lead to conflicting optimization signals during joint training, as suggested by~\cite{li2025unifork}. At the same time, our experimental setting may limit how clearly synergy can be observed. We conduct our experiments as post-training on a pretrained model whose capabilities are already largely established, which may lead to different training dynamics from those that arise during large-scale pre-training. In addition, the joint training uses the same concept-focused dataset constructed for the individual experiments in Section~\ref{sec:umms}, where each image–text pair is tightly aligned around \textit{counting}. Such paired data distributions are uncommon in typical multimodal pre-training corpora and may introduce an unfamiliar training configuration when the two objectives are optimized together. Distinguishing between these possibilities is difficult within the scope of post-training experiments and therefore remains an open question.
 
 \subsection{Does understanding training harm general multimodal ability?}
-
 \input{table/general_benchv2}
 
 A potential concern of capability injection through understanding training is that it may negatively affect the model’s overall multimodal ability. Since our approach introduces additional supervision targeting specific capabilities, one might expect such training to overfit to the target task or degrade performance on general multimodal benchmarks.
