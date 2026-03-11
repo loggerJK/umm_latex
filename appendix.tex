@@ -2,38 +2,79 @@
 \etocdepthtag.toc{appendix} % 여기서부터 부록 시작임을 태그 지정
 \section*{\Large Appendix}
 
-\setcounter{figure}{0}
-\setcounter{table}{0}
-\renewcommand{\thefigure}{A.\arabic{figure}}
-\renewcommand{\thetable}{A.\arabic{table}}
+% \setcounter{figure}{0}
+% \setcounter{table}{0}
+% \renewcommand{\thefigure}{A.\arabic{figure}}
+% \renewcommand{\thetable}{A.\arabic{table}}
+
+%%%%%%%%%%%% TABLE OF CONTENTS %%%%%%%%%%%% 
+\makeatletter
+\newcommand{\appendix@noopaddcontentsline}[3]{}
+\let\appendix@origsection\section
+\renewcommand{\section}{\@ifstar\appendix@origsection\appendix@section}
+\newcommand{\appendix@section}[1]{%
+  \let\appendix@savedaddcontentsline\addcontentsline
+  \let\addcontentsline\appendix@noopaddcontentsline
+  \appendix@origsection{#1}%
+  \let\addcontentsline\appendix@savedaddcontentsline
+  \phantomsection
+  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
+}
+\let\appendix@origsubsection\subsection
+\renewcommand{\subsection}{\@ifstar\appendix@origsubsection\appendix@subsection}
+\newcommand{\appendix@subsection}[1]{%
+  \let\appendix@savedaddcontentsline\addcontentsline
+  \let\addcontentsline\appendix@noopaddcontentsline
+  \appendix@origsubsection{#1}%
+  \let\addcontentsline\appendix@savedaddcontentsline
+  \phantomsection
+  \addcontentsline{toc}{subsection}{\protect\numberline{\thesubsection}#1}%
+}
+\makeatother
 
 \etocsetlevel{author}{6}
 \etocsetlevel{title}{6}
+\etocsettagdepth{main}{none}
+\etocsettagdepth{appendix}{subsection}
+\makeatletter
+{%
+\let\section\appendix@origsection
+\let\subsection\appendix@origsubsection
+\tableofcontents
+}
+\makeatother
 
-% \section*{Contents}
-% 부록 페이지만 표시하도록 필터링
-\etocsettagdepth{main}{none}      % 본문 태그는 표시 안 함
-\etocsettagdepth{appendix}{subsection} % 부록 태그는 표시함
-\tableofcontents % 필터링된 전체 목차를 출력
+\etocdepthtag.toc{appendix} % 여기서부터 부록 시작임을 태그 지정
+%%%%%%%%%%%% TABLE OF CONTENTS %%%%%%%%%%%% 
+
 
 
 \clearpage
 \section{Training Details}
 \label{sec:appendix_experimental_details}
-Our primary interest is in transferability, \textit{i.e.}, whether learning a task in one modality improves performance on the corresponding task in the other modality. Thus, for the transferability experiments, our default strategy is to apply LoRA to the QKV projection and MLP layers of the transformer blocks, which is  shared across modalities. All other major components, including the image encoder, projector/aligner, language modeling head, and diffusion head, are kept frozen. Across all runs, we use LoRA rank 128, 8-bit AdamW, a global batch size of 128, and bfloat16 training. To enable a fair comparison across architectures, we select models in the 7B--8B parameter range. For quantitative results, we report the best checkpoint from each training run.
+Our primary interest is in transferability, \textit{i.e.}, whether learning a task in one modality improves performance on the corresponding task in the other modality. Thus, for the transferability experiments, our default strategy is to apply LoRA to the Query, Key, Value projection and MLP layers of the transformer blocks, which is  shared across modalities. All other major components, including the image encoder, projector/aligner, language modeling head, and diffusion head, are kept frozen. Across all runs, we use LoRA rank 128, 8-bit AdamW, a global batch size of 128, and bfloat16 training. To enable a fair comparison across architectures, we select models in the 7B--8B parameter range. For quantitative results, we report the best checkpoint from each training run.
 For BAGEL~\cite{deng2025bagel}, we use a learning rate of $1\times10^{-4}$ and retain the original dynamic image resizing strategy of the model. For Janus-Pro~\cite{chen2025januspro}, we use the Janus-Pro-7B checkpoint with a learning rate of $4\times10^{-5}$; for both understanding and generation, we preserve the original aspect ratio, resize the longer side to 384 pixels, and pad the shorter side to obtain a $384 \times 384$ input. For Lumina-DiMOO, we use a learning rate of $3\times10^{-6}$; for both understanding and generation, we preserve the original aspect ratio, resize the longer side to 512 pixels, and pad the shorter side to obtain a $512 \times 512$ input. For BLIP3-o~\cite{chen2505blip3}, we use the BLIP3o-8B checkpoint. Since BLIP3-o employs separate transformers for understanding and generation, we fine-tune the corresponding branch for each task. We retain the original image processing strategy of Qwen2.5-VL-7B-Instruct~\cite{bai2025qwen2}, which is used as LLM backbone of BLIP3-o.
 
 \clearpage
 \section{Task Details}
 \label{sec:appendix_dataset_construction}
 \subsection{Counting}
-\subsubsection{Dataset detail.} Our \textit{visual instruction tuning dataset} for counting consists of 65.6K images and approximately 200K question-answer pairs. We derive the VQA pairs from the training sets of PixMo-Count~\cite{} and PixMo-Points~\cite{}.
-For counting understanding, we directly adopt the original question-answer pairs from PixMo-Count, as it is originally designed for counting tasks. To scale up the training data, we additionally incorporate samples from PixMo-Points. Since PixMo-Points is a point prediction dataset rather than a counting dataset, we reformulate it for counting by treating the number of points to be predicted as the object count. Note that PixMo-Points originally contains annotations with up to \textcolor{red}{[??]} points per image. We find that such extreme cases introduce excessive difficulty during training. To maintain a reasonable difficulty level, we filter out samples whose object count exceeds 20. For \textit{counting-aware generation dataset}, we construct the training set from the same 65.6K images used in the understanding split to ensure a controlled experimental setting. Specifically, we leverage the object count annotations from the understanding training set and use Qwen3-VL~\cite{} to generate count-aware generation prompts conditioned on these annotations.
+\subsubsection{Dataset detail.} Our \textit{visual instruction tuning dataset} for counting consists of 65.6K images and approximately 200K question-answer pairs. We derive the VQA pairs from the training sets of PixMo-Count~\cite{deitke2025molmo} and PixMo-Points~\cite{deitke2025molmo}.
+For counting understanding, we directly adopt the original question-answer pairs from PixMo-Count, as it is originally designed for counting tasks. To scale up the training data, we additionally incorporate samples from PixMo-Points. Since PixMo-Points is a point prediction dataset rather than a counting dataset, we reformulate it for counting by treating the number of points to be predicted as the object count. Note that PixMo-Points originally contains annotations more thank 1K points per image. We find that such extreme cases introduce excessive difficulty during training. To maintain a reasonable difficulty level, we filter out samples whose object count exceeds 20. For \textit{counting-aware generation dataset}, we construct the training set from the same 65.6K images used in the understanding split to ensure a controlled experimental setting. Specifically, we leverage the object count annotations from the understanding training set and use Qwen3-VL~\cite{bai2025qwen3} to generate count-aware generation prompts conditioned on these annotations.
 Table~\ref{} presents representative samples from both the counting understanding and generation training sets.
 
-\subsubsection{Understanding evaluation.} 
+
+\subsubsection{Understanding evaluation.}
+We evaluate counting understanding using 540 QA pairs constructed from the test split of PixMo-Count. Each QA pair explicitly includes both the question and a response template. In particular, the prompt contains a \texttt{Response Example} field that asks the model to place the predicted count inside the markdown markers \texttt{** **}. During evaluation, we first parse the substring enclosed by these markers and compare it with the ground-truth count. If such parsing fails, we fall back to checking whether the ground-truth count appears anywhere in the model output, either as an Arabic numeral or as an English number word. This heuristic allows us to robustly score free-form responses while preserving the intended answer format. An example QA pair is shown below.
+
+\begin{quote}
+\textbf{Question:} How many people are there in the image? Response Example: There are \texttt{**<number>**} of people in the image. \\
+\textbf{Answer:} There are \texttt{**5**} of people in the image.
+\end{quote}
+
+
 \subsubsection{Generation evaluation.} 
-Following the prompt generation protocol of GenEval~\cite{}, 
+Following the prompt generation protocol of GenEval~\cite{ghosh2023geneval}, 
 we construct a total of 90 prompts by combining 10 object classes 
 and 9 count words, yielding 90 prompts in total. 
 Each prompt follows the template:
@@ -52,7 +93,7 @@ To obtain object counts from generated images, we follow same detection-based ap
 \input{x_supple/tabs/dataset_counting}
 \subsection{Spatial Relation}
 \subsubsection{Dataset detail.}
-% @@@재우님 여기좀 써주세요
+This place is for jaewoo!
 \input{x_supple/tabs/dataset_spatial}
 \subsubsection{Generation evaluation.} 
 \input{x_supple/figs/relation_prompts}
@@ -78,6 +119,13 @@ specified in the prompt. If the detector fails to localize either object,
 the sample is excluded from evaluation.
 
 \subsection{Text Recognition and Generation}
+\subsubsection{Dataset detail.} 
+
+\subsubsection{Understanding Evaluation.} 
+
+\subsubsection{Generation Evaluation.} 
+
+
 
 \clearpage
 \section{Additional Quantitative Results}
