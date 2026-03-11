@@ -22,7 +22,7 @@
 % 전반적으로, 우리가 관심이 있는 건 transfer, 즉 UMM이 특정 task를 하나의 modality로 배웠을 때, 다른 modality로도 해당 task의 성능이 올라가는지를 보고 싶은 것이다. 따라서, transferability에 대한 실험을 할 때는 가능한 각 아키텍처 (a)-(d)에서 모달리티 간에 공유 되는 부분인 transformer 레이어에 qkv projection 및 MLP 레이어에 대해 LoRA 튜닝 진행하는 것을 기본전략으로 채택했다. 즉, 일반적인 vision aligner/projector 모든 학습에서 Lora rank=128, adamw 8bit optimizer, global batch size 128, bfloat16를 사용했다. 가능한 fair comparison을 위해, 파라미터 사이즈 7b-8b 구간의 모델들을 선정하여 사용했다.
 
 \subsection{BAGEL}
-% lr 1e-4. 원래 모델의 다이나믹 이미지 리사이즈를 이용
+% lr 1e-4. 원래 모델의 다이나믹 이미지 리사이즈를 이용. Und image (378, 980) Gen (512, 1024)
 
 \subsection{Janus-Pro}
 % 선정모델 : Janus-Pro 7B, lr 4e-5, und image size 384, gen image s ize384, 종횡비 유지하면서 긴 변 기준 384로 resize 후 패딩 처리하여 사용했다.
@@ -31,7 +31,7 @@
 %  lr 3e-6, und image 512, gen image 512. 종횡비 유지하면서 긴 변 기준 512로 resize 후 패딩 처리하여 사용했다.
 
 \subsection{BLIP3-o}
-% 선정모델 : BLIP3o-8B Und (378, 980) Gen (512, 1024)
+% 선정모델 : BLIP3o-8B 
 
 \clearpage
 \section{Task Details}
