@@ -16,22 +16,12 @@
 \etocsettagdepth{appendix}{subsection} % 부록 태그는 표시함
 \tableofcontents % 필터링된 전체 목차를 출력
 
+
 \clearpage
 \section{Training Details}
 \label{sec:appendix_experimental_details}
-% 전반적으로, 우리가 관심이 있는 건 transfer, 즉 UMM이 특정 task를 하나의 modality로 배웠을 때, 다른 modality로도 해당 task의 성능이 올라가는지를 보고 싶은 것이다. 따라서, transferability에 대한 실험을 할 때는 가능한 각 아키텍처 (a)-(d)에서 모달리티 간에 공유 되는 부분인 transformer 레이어에 qkv projection 및 MLP 레이어에 대해 LoRA 튜닝 진행하는 것을 기본전략으로 채택했다. 즉, 일반적인 vision aligner/projector 모든 학습에서 Lora rank=128, adamw 8bit optimizer, global batch size 128, bfloat16를 사용했다. 가능한 fair comparison을 위해, 파라미터 사이즈 7b-8b 구간의 모델들을 선정하여 사용했다.
-
-\subsection{BAGEL}
-% lr 1e-4. 원래 모델의 다이나믹 이미지 리사이즈를 이용. Und image (378, 980) Gen (512, 1024)
-
-\subsection{Janus-Pro}
-% 선정모델 : Janus-Pro 7B, lr 4e-5, und image size 384, gen image s ize384, 종횡비 유지하면서 긴 변 기준 384로 resize 후 패딩 처리하여 사용했다.
-
-\subsection{Lumina-DiMOO}
-%  lr 3e-6, und image 512, gen image 512. 종횡비 유지하면서 긴 변 기준 512로 resize 후 패딩 처리하여 사용했다.
-
-\subsection{BLIP3-o}
-% 선정모델 : BLIP3o-8B 
+Our primary interest is in transferability, \textit{i.e.}, whether learning a task in one modality improves performance on the corresponding task in the other modality. Accordingly, for the transferability experiments, our default strategy is to apply LoRA to the QKV projection and MLP layers of the transformer blocks shared across modalities whenever such shared blocks exist in architectures (a)--(d). All other major components, including the image encoder, projector/aligner, language modeling head, and diffusion head, are kept frozen. Across all runs, we use LoRA rank 128, 8-bit AdamW, a global batch size of 128, and bfloat16 training. To enable a fair comparison across architectures, we select models in the 7B--8B parameter range. For quantitative results, we report the best checkpoint from each training run.
+For BAGEL, we use a learning rate of $1\times10^{-4}$ and retain the original dynamic image resizing strategy of the model. For Janus-Pro, we use the Janus-Pro 7B checkpoint with a learning rate of $4\times10^{-5}$; for both understanding and generation, we preserve the original aspect ratio, resize the longer side to 384 pixels, and pad the shorter side to obtain a $384 \times 384$ input. For Lumina-DiMOO, we use a learning rate of $3\times10^{-6}$; for both understanding and generation, we preserve the original aspect ratio, resize the longer side to 512 pixels, and pad the shorter side to obtain a $512 \times 512$ input. For BLIP3-o, we use the BLIP3o-8B checkpoint. Since BLIP3-o employs separate transformers for understanding and generation, we fine-tune the corresponding branch for each task. We use an input resolution of $378 \times 980$ for understanding and $512 \times 1024$ for generation.
 
 \clearpage
 \section{Task Details}
