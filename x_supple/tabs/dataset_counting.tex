@@ -1,0 +1,35 @@
+\begin{table*}[t]
+\centering
+\label{tab:dataset_examples}
+\setlength{\tabcolsep}{6pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{cccc}
+\toprule
+{\textbf{Image}} & {\textbf{PixMo QA}} & \textbf{Understanding QA} &{\textbf{Generation Prompt}} \\
+\midrule
+\addlinespace[4pt]
+\raisebox{-0.5\height}{\includegraphics[width=5cm]{example-image-a}} &
+\parbox[c]{4cm}{\raggedright\small A blue-toned photograph of a coastal scene with waves.} &
+\parbox[c]{4cm}{\raggedright\small Describe the scene.} &
+\parbox[c]{6cm}{\raggedright\scriptsize You are given a photograph of a coastal landscape. Please provide a comprehensive description of all visible elements including the water conditions, rock formations, sky color, and any atmospheric effects.} \\
+\addlinespace[10pt]
+\raisebox{-0.5\height}{\includegraphics[width=5cm]{example-image-a}} &
+\parbox[c]{4cm}{\raggedright\small A warm sunset over a desert canyon with sandstone.} &
+\parbox[c]{4cm}{\raggedright\small What colors are present?} &
+\parbox[c]{6cm}{\raggedright\scriptsize Analyze the following desert landscape image. Identify all color gradients, geological textures, and lighting conditions visible in the scene.} \\
+\addlinespace[10pt]
+\raisebox{-0.5\height}{\includegraphics[width=5cm]{example-image-a}} &
+\parbox[c]{4cm }{\raggedright\small A lush green forest with sunlight filtering through.} &
+\parbox[c]{4cm }{\raggedright\small Identify vegetation types.} &
+\parbox[c]{6cm}{\raggedright\scriptsize Examine the provided forest photograph and enumerate all distinguishable plant species or vegetation categories. Note the distribution of light and shadow.} \\
+\addlinespace[10pt]
+\raisebox{-0.5\height}{\includegraphics[width=5cm]{example-image-a}} &
+\parbox[c]{4cm }{\raggedright\small A purple-tinted cityscape at twilight with neon.} &
+\parbox[c]{4cm }{\raggedright\small Describe the environment.} &
+\parbox[c]{6cm}{\raggedright\scriptsize You are presented with a nighttime urban scene. Provide a thorough description covering all visible architectural elements, signage, lighting sources, and human activity.} \\
+\addlinespace[4pt]
+\bottomrule
+\end{tabular}
+}% end resizebox
+\caption{Examples of counting dataset.}
+\end{table*}
