@@ -55,7 +55,7 @@
 % Our primary interest is in transferability, \textit{i.e.}, whether learning a task in one modality improves performance on the corresponding task in the other modality. Thus, for the transferability experiments, our default strategy is to apply LoRA to the Query, Key, Value projection and MLP layers of the transformer blocks, which is  shared across modalities. All other major components, including the image encoder, projector/aligner, language modeling head, and diffusion head, are kept frozen. Across all runs, we use LoRA rank 128, 8-bit AdamW, a global batch size of 128, and bfloat16 training. To enable a fair comparison across architectures, we select models in the 7B--8B parameter range. For quantitative results, we report the best checkpoint from each training run.
 % For BAGEL~\cite{deng2025bagel}, we use a learning rate of $1\times10^{-4}$ and retain the original dynamic image resizing strategy of the model. For Janus-Pro~\cite{chen2025januspro}, we use the Janus-Pro-7B checkpoint with a learning rate of $4\times10^{-5}$; for both understanding and generation, we preserve the original aspect ratio, resize the longer side to 384 pixels, and pad the shorter side to obtain a $384 \times 384$ input. For Lumina-DiMOO, we use a learning rate of $3\times10^{-6}$; for both understanding and generation, we preserve the original aspect ratio, resize the longer side to 512 pixels, and pad the shorter side to obtain a $512 \times 512$ input. For BLIP3-o~\cite{chen2505blip3}, we use the BLIP3o-8B checkpoint. Since BLIP3-o employs separate transformers for understanding and generation, we fine-tune the corresponding branch for each task. We retain the original image processing strategy of Qwen2.5-VL-7B-Instruct~\cite{bai2025qwen2}, which is used as LLM backbone of BLIP3-o.
 
-In the experiments of Section~\ref{}, we evaluate four representative UMMs spanning different architectural families (Figure~\ref{fig:arch_categorize}): BAGEL~\cite{deng2025bagel} (7B), Janus-Pro~\cite{chen2025januspro} (7B), Lumina-DiMOO (?B), and BLIP3-o~\cite{chen2505blip3} (?B). All models fall within the 7B–8B parameter range to enable a fair comparison across architectures. To investigate whether transferability emerges in the shared LLM backbone, we perform LoRA-based supervised fine-tuning on top of publicly available pretrained weights. We apply LoRA with rank 128 to the query, key, and value projection layers as well as the MLP layers of the transformer blocks. All other components—including the image encoder, projector/aligner, language modeling head, and diffusion head—are kept frozen. We use 8-bit AdamW with bfloat16 training across all runs. Unless otherwise specified, we follow the official codebases and recommended training configurations of each model. The model-specific settings are described below.
+In the experiments of Section~\ref{sec:umms}, we evaluate four representative UMMs spanning different architectural families (Figure~\ref{fig:arch_categorize}): BAGEL~\cite{deng2025bagel} (7B), Janus-Pro~\cite{chen2025januspro} (7B), Lumina-DiMOO (8B), and BLIP3-o~\cite{chen2505blip3} (8B). All models fall within the 7B–8B parameter range to enable a fair comparison across architectures. To investigate whether transferability emerges in the shared LLM backbone, we perform LoRA-based supervised fine-tuning on top of publicly available pretrained weights. We apply LoRA with rank 128 to the query, key, and value projection layers as well as the MLP layers of the transformer blocks. All other components—including the image encoder, projector/aligner, language modeling head, and diffusion head—are kept frozen. We use 8-bit AdamW with bfloat16 training across all runs. Unless otherwise specified, we follow the official codebases and recommended training configurations of each model. The model-specific settings are described below.
 
 \noindent\textbf{BAGEL~\cite{deng2025bagel}.}
 We use a learning rate of $1\times10^{-4}$ and retain the model’s original dynamic image resizing strategy.
@@ -67,7 +67,7 @@ We use a learning rate of $4\times10^{-5}$. For both understanding and generatio
 We use a learning rate of $3\times10^{-6}$. For both understanding and generation, we preserve the aspect ratio, resize the longer side to 512 pixels, and pad the shorter side, resulting in a $512\times512$ input. We use the same training configuration for the experiments in Sections~\ref{sec:tasks} and~\ref{sec:discuss_ocr}.
 
 \noindent\textbf{BLIP3-o~\cite{chen2505blip3}.}
-Since BLIP3-o employs separate transformer branches for understanding and generation, we fine-tune only the branch corresponding to each task. We retain the original image processing pipeline of Qwen2.5-VL-7B-Instruct~\cite{bai2025qwen2}, which serves as the LLM backbone of BLIP3-o.
+We use a learning rate of $2\times10^{-5}$. Since BLIP3-o employs separate transformer branches for understanding and generation, we fine-tune only the branch corresponding to each task. We retain the original image processing strategy of Qwen2.5-VL-7B-Instruct~\cite{bai2025qwen2}, which serves as the LLM backbone of BLIP3-o.
 
 % \begin{table}[h]
 % \centering
@@ -95,7 +95,7 @@ Since BLIP3-o employs separate transformer branches for understanding and genera
 \label{sec:appendix_dataset_construction}
 \subsection{Counting}
 \subsubsection{Dataset detail.} Our \textit{visual instruction tuning dataset} for counting consists of 65.6K images and approximately 200K question-answer pairs. We derive the VQA pairs from the training sets of PixMo-Count~\cite{deitke2025molmo} and PixMo-Points~\cite{deitke2025molmo}.
-For counting understanding, we directly adopt the original question-answer pairs from PixMo-Count, as it is originally designed for counting tasks. To scale up the training data, we additionally incorporate samples from PixMo-Points. Since PixMo-Points is a point prediction dataset rather than a counting dataset, we reformulate it for counting by treating the number of points to be predicted as the object count. Note that PixMo-Points originally contains annotations more thank 1K points per image. We find that such extreme cases introduce excessive difficulty during training. To maintain a reasonable difficulty level, we filter out samples whose object count exceeds 20. For \textit{counting-aware generation dataset}, we construct the training set from the same 65.6K images used in the understanding split to ensure a controlled experimental setting. Specifically, we leverage the object count annotations from the understanding training set and use Qwen3-VL~\cite{bai2025qwen3} to generate count-aware generation prompts conditioned on these annotations.
+For counting understanding, we directly adopt the original question-answer pairs from PixMo-Count, as it is originally designed for counting tasks. To scale up the training data, we additionally incorporate samples from PixMo-Points. Since PixMo-Points is a point prediction dataset rather than a counting dataset, we reformulate it for counting by treating the number of points to be predicted as the object count. Note that PixMo-Points originally contains annotations more thank 1K points per image. We find that such extreme cases introduce excessive difficulty during training. To maintain a reasonable difficulty level, we filter out samples whose object count exceeds 20. For \textit{counting-aware generation dataset}, we construct the training set from the same 65.6K images used in the understanding split to ensure a controlled experimental setting. Specifically, we leverage the object count annotations from the understanding training set and use Qwen3-VL~\cite{bai2025qwen3} to generate count-aware generation description conditioned on these annotations.
 Table~\ref{tab:dataset_counting} presents representative samples from both the counting understanding and generation training sets.
 \input{x_supple/tabs/dataset_counting}
 
@@ -193,23 +193,23 @@ We use the same underlying text-image pair for both modalities. For understandin
 
 \clearpage
 \section{Additional Quantitative Results}
-In this section, we provide the complete quantitative results for all three tasks under both objectives: understanding and generation.
-\label{sec:appendix_additional_quantitative}
-\subsection{(Counting)} 
+% In this section, we provide the complete quantitative results for all three tasks under both objectives: understanding and generation. 
+% \label{sec:appendix_additional_quantitative}
+% \subsection{(Counting)} 
 \input{table/appendix_counting_full}
-Table~\ref{tab:appendix_counting_full} extends the counting transferability results in Table~\ref{tab:transfer} of the 
-main paper by additionally reporting within-modality training results (\textit{und}$\rightarrow$\textit{und} and \textit{gen}$\rightarrow$\textit{gen}), 
-which serve as upper bounds for the corresponding transfer directions.
-For generation, \textit{und}$\rightarrow$\textit{gen} transfer proves surprisingly competitive against the 
-within-modality upper bound. In Lumina-DiMOO, \textit{und}$\rightarrow$\textit{gen} transfer achieves \textit{gen}$\rightarrow$\textit{gen}, and in BLIP3-o, it substantially outperforms the within-modality baseline.
-For understanding, \textit{gen}$\rightarrow$\textit{und} transfer is consistently observed across architectures 
-but falls short of the within-modality upper bound (\textit{und}$\rightarrow$\textit{und}) 
-in all cases, indicating that transferability exists in this direction while leaving a gap 
-relative to direct understanding supervision.
+\input{table/appendix_spatial_full}
+Table~\ref{tab:appendix_counting_full} and Table~\ref{tab:appendix_spatial_lumina} 
+complement Table~\ref{tab:transfer} in the main paper by additionally reporting within-modality training results (\textit{und}$\rightarrow$\textit{und} and \textit{gen}$\rightarrow$\textit{gen}), which serve as upper bounds for each 
+transfer direction. 
 
-\subsection{Spatial Relation}
-\subsection{Text Recognition and Generation}
-\input{table/appendix_spatial_ocr_full_combined}
+Table~\ref{tab:appendix_counting_full} extends the counting transferability results in Table~\ref{tab:transfer} of the main paper by additionally reporting within-modality training results (\textit{und}$\rightarrow$\textit{und} and \textit{gen}$\rightarrow$\textit{gen}), which serve as upper bounds for the corresponding transfer directions. For generation, \textit{und}$\rightarrow$\textit{gen} transfer proves surprisingly competitive against the within-modality upper bound. In Lumina-DiMOO, \textit{und}$\rightarrow$\textit{gen} transfer achieves \textit{gen}$\rightarrow$\textit{gen}, and in BLIP3-o, it substantially outperforms the within-modality baseline. For understanding, \textit{gen}$\rightarrow$\textit{und} transfer is consistently observed across architectures but falls short of the within-modality upper bound (\textit{und}$\rightarrow$\textit{und}) in all cases, indicating that transferability exists in this direction while leaving a gap relative to direct understanding supervision.
+
+
+
+
+
+
+% \input{table/appendix_spatial_ocr_full_combined}
 
 \clearpage
 \section{Generation Training Results Across Unified Multimodal Models}
@@ -231,7 +231,9 @@ Overall, these results suggest that \textit{und}$\rightarrow$\textit{gen} pertur
 \label{sec:appendix_qualitative}
 \subsection{Counting}
 \input{fig/appendix_counting_placeholder}
+\clearpage
 \subsection{Spatial Relation}
 \input{fig/appendix_spatial_placeholder}
+\clearpage
 \subsection{Text Generation}
 \input{fig/appendix_textgen_placeholder}

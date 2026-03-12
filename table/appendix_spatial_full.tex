@@ -1,22 +1,25 @@
-\begin{table*}[t]
+\begin{wraptable}{r}{0.26\textwidth}
 \centering
+\vspace{-\intextsep}
+\resizebox{\linewidth}{!}{%
 \begin{tabular}{c|c}
 \toprule
 \textbf{Train $\rightarrow$ Test} & \textbf{Acc. (\%)}~$\uparrow$ \\
 \midrule
 \rowcolor{gray!15}
 \multicolumn{2}{l}{\textit{Understanding Evaluation}} \\
-Baseline & 61.0 \\
-\textit{und} $\rightarrow$ \textit{und} & 89.0 \\
-\textit{gen} $\rightarrow$ \textit{und} & 67.0 \\
+Baseline & 0.61 \\
+\textit{und} $\rightarrow$ \textit{und} & 0.89 \\
+\textit{gen} $\rightarrow$ \textit{und} & 0.67 \\
 \midrule
 \rowcolor{gray!15}
 \multicolumn{2}{l}{\textit{Generation Evaluation}} \\
 Baseline & 0.67 \\
-\textit{und} $\rightarrow$ \textit{gen} & 74.0 \\
-\textit{gen} $\rightarrow$ \textit{gen} & 80.0 \\
+\textit{und} $\rightarrow$ \textit{gen} & 0.74 \\
+\textit{gen} $\rightarrow$ \textit{gen} & 0.80 \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{Full spatial relation transfer matrix for Lumina-DiMOO.} Accuracy is reported for baseline, within-modality transfer, and cross-modality transfer under both understanding and generation evaluation.}
+}
+\caption{\textbf{Full spatial relation transfer matrix for Lumina-DiMOO.}}
 \label{tab:appendix_spatial_full}
-\end{table*}
+\end{wraptable}

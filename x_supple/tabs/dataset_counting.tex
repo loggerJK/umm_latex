@@ -4,28 +4,33 @@
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{cccc}
 \toprule
-{\textbf{Image}} & {\textbf{PixMo QA}} & \textbf{Understanding QA} &{\textbf{Generation Prompt}} \\
+{\textbf{Image}} & {\textbf{PixMo-Points/Counts}} & \textbf{Understanding QA} &{\textbf{Description}} \\
 \midrule
 \addlinespace[4pt]
-\raisebox{-0.5\height}{\includegraphics[width=5cm]{example-image-a}} &
-\parbox[c]{4cm}{\raggedright\small A blue-toned photograph of a coastal scene with waves.} &
-\parbox[c]{4cm}{\raggedright\small Describe the scene.} &
-\parbox[c]{6cm}{\raggedright\scriptsize You are given a photograph of a coastal landscape. Please provide a comprehensive description of all visible elements including the water conditions, rock formations, sky color, and any atmospheric effects.} \\
+\raisebox{-0.5\height}{\includegraphics[width=5cm]{x_supple/files/counting1.png}} &
+\parbox[c]{4cm}{\raggedright\scriptsize <points x1="9.388" y1="75.817" x2="26.667" y2="78.214" x3="47.483" y3="80.392" x4="65.578" y4="77.124" x5="93.469" y5="73.638" alt="thumbs">, <points x1="89.932" y1="57.081" x2="70.612" y2="56.209" x3="51.429" y3="56.427" x4="34.558" y4="60.784" x5="14.014" y5="59.477" alt="index fingers"> \ldots
+} &
+\parbox[c]{4cm}{\raggedright\scriptsize Q: How many thumbs are there in the image? Response Example : There are <number> thumbs in the image. \\[8pt]
+A: There are ** 5 ** thumbs in the image.} &
+\parbox[c]{6cm}{\raggedright\scriptsize 5 thumbs, 5 index fingers, 5 middle fingers, 5 pinky fingers, 5 number of right thumbs, 5 right pointer fingers are arranged in a horizontal row against a solid black background. Each hand displays exactly five fingers, including the thumb, with the right thumb and right pointer finger clearly visible on each. The skin tones vary slightly, and the lighting highlights the natural texture and creases of the palms and fingers. A total of five hands are shown, each positioned to emphasize the count of fingers and thumbs, with no additional objects present.} \\
 \addlinespace[10pt]
-\raisebox{-0.5\height}{\includegraphics[width=5cm]{example-image-a}} &
-\parbox[c]{4cm}{\raggedright\small A warm sunset over a desert canyon with sandstone.} &
-\parbox[c]{4cm}{\raggedright\small What colors are present?} &
-\parbox[c]{6cm}{\raggedright\scriptsize Analyze the following desert landscape image. Identify all color gradients, geological textures, and lighting conditions visible in the scene.} \\
+\raisebox{-0.5\height}{\includegraphics[width=5cm]{x_supple/files/counting2.jpg}} &
+\parbox[c]{4cm}{\raggedright\scriptsize <points x1="81.15" y1="35.082" x2="67.25" y2="46.327" x3="68.85" y3="21.589" x4="62.65" y4="11.094" x5="42.75" y5="34.933" x6="16.35" y6="38.081" alt="people">, <points x1="68.35" y1="20.69" x2="63.95" y2="25.937" x3="61.45" y3="6.147" x4="39.15" y4="11.394" x5="14.75" y5="14.543" alt="heads"> \ldots} &
+\parbox[c]{4cm}{\raggedright\scriptsize Q: How many people are there in the image? Response Example : There are <number> people in the image. \\[8pt]
+A: There are ** 6 ** people in the image.} &
+\parbox[c]{6cm}{\raggedright\scriptsize Six people, five heads, six people on court, eleven shoes, ten arms, nine socks, six humans, nine letters, seven hands, five numbers, eight eyes, six white lines, nine elbows, five shorts. The scene shows exactly six people on court, each wearing blue uniforms with white lettering and numbers, standing on a wooden floor marked with six white lines. A total of eleven shoes are visible, paired with nine socks, and the players’ arms and elbows are clearly defined. The uniforms feature five numbers and nine letters, with eight eyes and seven hands visible. Five shorts are worn by the players, and the composition is lit evenly under bright overhead lighting.} \\
 \addlinespace[10pt]
-\raisebox{-0.5\height}{\includegraphics[width=5cm]{example-image-a}} &
-\parbox[c]{4cm }{\raggedright\small A lush green forest with sunlight filtering through.} &
-\parbox[c]{4cm }{\raggedright\small Identify vegetation types.} &
-\parbox[c]{6cm}{\raggedright\scriptsize Examine the provided forest photograph and enumerate all distinguishable plant species or vegetation categories. Note the distribution of light and shadow.} \\
+\raisebox{-0.5\height}{\includegraphics[width=5cm]{x_supple/files/counting3.jpg}} &
+\parbox[c]{4cm }{\raggedright\scriptsize <points x1="15.918" y1="63.424" x2="28.613" y2="65.37" x3="42.09" y3="66.796" x4="51.367" y4="64.591" x5="63.477" y5="66.537" x6="75.977" y6="65.24" x7="87.695" y7="65.37" alt="people sitting">, <points x1="22.363" y1="23.476" x2="89.746" y2="39.559" \ldots  alt="female"> \ldots} &
+\parbox[c]{4cm }{\raggedright\scriptsize Q: How many people sitting are there in the image? Response Example : There are <number> people sitting in the image. \\[8pt]
+A: There are ** 7 ** people sitting in the image.} &
+\parbox[c]{6cm}{\raggedright\scriptsize 7 people sitting, 13 female, 15 males, 6 people with glasses, 14 ties, 8 scarves, 5 people wearing glasses, 7 wooden chairs, 13 Females, 7 Sitting people. The group is arranged in three rows, with exactly 7 people sitting on 7 wooden chairs. A total of 13 females and 15 males are visible, wearing white shirts and blue patterned ties or scarves. Exactly 6 people have glasses, and 5 of them are wearing glasses, with 14 ties and 8 scarves distributed among them. The background is a textured blue wall, and the polished wooden floor reflects the studio lighting.} \\
 \addlinespace[10pt]
-\raisebox{-0.5\height}{\includegraphics[width=5cm]{example-image-a}} &
-\parbox[c]{4cm }{\raggedright\small A purple-tinted cityscape at twilight with neon.} &
-\parbox[c]{4cm }{\raggedright\small Describe the environment.} &
-\parbox[c]{6cm}{\raggedright\scriptsize You are presented with a nighttime urban scene. Provide a thorough description covering all visible architectural elements, signage, lighting sources, and human activity.} \\
+\raisebox{-0.5\height}{\includegraphics[width=5cm] {x_supple/files/counting4.jpg}} &
+\parbox[c]{4cm }{\raggedright\scriptsize <points x1="57.325" y1="47.714" x2="58.008" y2="50.741" x3="85.059" y3="65.194" x4="82.813" y4="70.468" alt="pillows">, <points x1="42.188" y1="67.782" x2="42.286" y2="76.962" x3="42.872" y3="83.602" x4="49.415" y4="81.356" x5="65.919" y5="67.489" alt="boxes"> \ldots} &
+\parbox[c]{4cm }{\raggedright\scriptsize Q: How many pillows are there in the image? Response Example : There are <number> pillows in the image. \\[8pt]
+A: There are ** 4 ** pillows in the image.} &
+\parbox[c]{6cm}{\raggedright\scriptsize 4 pillows, 5 boxes, 8 shoes, 11 hangers, 6 leaves, 13 folded items, 15 folded textile items, 10 shirts hanging up, 11 hanger body, 11 metal hooks, 6 leafs, 9 grey buttons on white shirt on end, 10 clothes on clothes hangers. The metal-framed shelving unit holds exactly 10 shirts hanging up and a total of 15 folded textile items. Four pillows rest on lower shelves, and exactly 8 shoes are arranged neatly. A total of 5 boxes, including one red and one black, sit on the bottom shelf. Six leaves are visible near the window, and the 11 hangers support 10 clothes on clothes hangers.} \\
 \addlinespace[4pt]
 \bottomrule
 \end{tabular}
