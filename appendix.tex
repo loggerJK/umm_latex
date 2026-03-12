@@ -182,10 +182,9 @@ the sample is excluded from evaluation.
 We use the same underlying text-image pair for both modalities. For understanding, each rendered image is paired with the fixed instruction \texttt{Extract all text from the image.}, and the normalized sentence is used as the target. For generation, the same sentence is embedded into a fixed caption template describing a Mathpix-style rendering with sharp, legible text in natural reading order. This construction lets us compare \textit{und} and \textit{gen} transfer on identical textual content while changing only the direction of supervision. The explicit understanding and generation formats are shown below.
 
 \begin{quote}
-\textbf{Understanding question:} Extract all text from the image. \\
-\textbf{Understanding answer:} The train arrived before sunset. \\
-\textbf{Generation prompt:} A Mathpix Markdown format with sharp, legible black text. High-resolution typography, top-down view. \\
-The text is rendered in natural left-to-right, top-to-bottom reading order. The text reads: The train arrived before sunset.
+\textbf{Understanding question:} \texttt{"Extract all text from the image."} \\
+\textbf{Understanding answer:} \texttt{"\{SENTENCE\}"} \\
+\textbf{Generation prompt:} \texttt{"A Mathpix Markdown format with sharp, legible black text. High-resolution typography, top-down view. The text is rendered in natural left-to-right, top-to-bottom reading order. The text reads: \{SENTENCE\}"} \\
 \end{quote}
 
 \subsubsection{Understanding Evaluation.} We evaluate text recognition on the first 250 samples from the test split of the same corpus. For each example, we normalize the reference sentence in the same way as during training and re-render it as a \texttt{clean\_light} markdown image. At evaluation time, we use the explicit instruction \texttt{Extract all text from the image in reading order.} and otherwise follow the default understanding prompt format and decoding procedure of each model. After generation, both prediction and reference are lowercased, line breaks are replaced with spaces, and leading and trailing whitespace is stripped. We report WER, CER, BLEU, METEOR, average edit distance, and token-level precision, recall, and F1.
