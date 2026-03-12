@@ -214,8 +214,12 @@ relative to direct understanding supervision.
 
 \clearpage
 \section{Generation Training Results Across Unified Multimodal Models}
+
 \label{sec:appendix_gen_results}
+\vspace{-20pt}
 \input{table/appendix_fid_is_combined}
+\vspace{-20pt}
+
 We measure IS and FID under two prompt settings to assess how generation-side fine-tuning affects the output distribution of the baseline generator. First, we evaluate with task-specific prompts that match the format used during generation training. We use 1.8K samples for counting, 2K for spatial relation, and 1.8K for text recognition and generation. Second, to examine the effect on more general image synthesis, we repeat the evaluation using 1K prompts from the COCO validation set. The results are reported in Table~\ref{tab:appendix_fid_is_combined}.
 We first consider FID. Across both prompt settings and all tasks, \textit{und}$\rightarrow$\textit{gen} consistently yields lower FID than \textit{gen}$\rightarrow$\textit{gen}. Because FID is computed with respect to the baseline model's generations under the same prompt set, this result indicates that understanding-based tuning preserves the baseline generator's original output distribution more faithfully than direct generation tuning.
 
