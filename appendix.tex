@@ -92,16 +92,19 @@ and report the average accuracy across all generated samples.
 To obtain object counts from generated images, we follow same detection-based approach as GenEval~\cite{ghosh2023geneval}.
 \input{x_supple/tabs/dataset_counting}
 \subsection{Spatial Relation}
-\subsubsection{Dataset detail.}
-This place is for jaewoo!
+\subsubsection{Dataset detail.} We construct a synthetic spatial relation dataset from ImageNet crops by compositing two objects on a shared canvas and assigning one of four diagonal relations: \texttt{top-left}, \texttt{top-right}, \texttt{bottom-left}, and \texttt{bottom-right}. The same image is reused for both understanding and generation. For understanding, each image is paired with a natural-language question and a full-sentence answer. The question explicitly specifies the required response format so that the target output is a sentence rather than a bare relation label. An example is shown below.
+
+\begin{quote}
+\textbf{Question:} With respect to the digital clock, where can you find the flat-coated retriever? Response format: The flat-coated retriever can be found to the top-left/top-right/bottom-left/bottom-right of the digital clock. \\
+\textbf{Answer:} The flat-coated retriever can be found to the top-right of the digital clock.
+\end{quote}
+
+For generation, we reuse the target answer sentence itself as the text prompt. As a result, generation prompts take the form of declarative relation statements, \textit{e.g.}, ``The flat-coated retriever can be found to the top-right of the digital clock.''
 \input{x_supple/tabs/dataset_spatial}
+\subsubsection{Understanding evaluation.} We evaluate spatial-relation understanding on the first 100 samples from the validation split of the same dataset. The model receives the original question string, including the response-format clause shown above, and generates a free-form answer sentence. We mark a prediction as correct by parsing a single diagonal relation word from both the prediction and the ground-truth answer. Predictions that contain no valid relation word or mention multiple relations are counted as incorrect.
 \subsubsection{Generation evaluation.} 
 \input{x_supple/figs/relation_prompts}
-We generate 100 prompts describing spatial relationships between two 
-objects, following the same prompt format used during training. 
-The full list of evaluation prompts is provided in Fig.~\ref{fig:spatial_prompts}.
-For each prompt, we generate four images with different random seeds 
-and report the average accuracy across all generated samples.
+We generate 100 prompts describing spatial relationships between two objects, following the same answer-style declarative format used during training. Each prompt is a sentence that states the diagonal relation between two object classes, \textit{e.g.}, ``The truck can be found to the top-left of the baseball.'' The full list of evaluation prompts is provided in Fig.~\ref{fig:spatial_prompts}. For each prompt, we generate four images with different random seeds and report the average accuracy across all generated samples.
 
 For evaluation, we follow the same detection-based approach as GenEval~\cite{ghosh2023geneval}, obtaining bounding boxes for both objects. 
 The relative position between objects is determined by the difference 
@@ -122,23 +125,33 @@ the sample is excluded from evaluation.
 \subsection{Text Recognition and Generation}
 \subsubsection{Dataset detail.} We construct the synthetic OCR training set from a public English sentence corpus on Hugging Face. Specifically, we use the training split of \path{agentlans/high-quality-english-sentences} and keep the first 200K samples. Each sample is normalized by replacing line breaks with spaces, trimming whitespace, and truncating the target string to at most 120 characters. The normalized text is then formatted as \texttt{\# <sentence>}, \textit{i.e.}, a single level-1 markdown heading rather than a full free-form document. We convert this markdown string to HTML using the Python \texttt{markdown} library with standard extensions for fenced code blocks, tables, automatic line breaks, and list handling, and then rasterize the HTML into a PNG image with \texttt{wkhtmltoimage}. We define four hand-designed CSS templates, \texttt{clean\_light}, \texttt{dark}, \texttt{sepia}, and \texttt{blue\_gray}, which vary the background, text color, and font family. During understanding training, one of these templates is sampled at random for each example, whereas generation training uses the \texttt{clean\_light} template throughout. Figure~\ref{fig:ocr_dataset} shows representative examples.
 
-We use the same underlying text-image pair for both modalities. For understanding, each rendered image is paired with the instruction \texttt{Extract all text from the image.}, and the normalized sentence is used as the target. For generation, the same sentence is embedded into a fixed caption template describing a Mathpix-style rendering with sharp, legible text in natural reading order. This construction lets us compare \textit{und} and \textit{gen} transfer on identical textual content while changing only the direction of supervision.
+We use the same underlying text-image pair for both modalities. For understanding, each rendered image is paired with the fixed instruction \texttt{Extract all text from the image.}, and the normalized sentence is used as the target. For generation, the same sentence is embedded into a fixed caption template describing a Mathpix-style rendering with sharp, legible text in natural reading order. This construction lets us compare \textit{und} and \textit{gen} transfer on identical textual content while changing only the direction of supervision. The explicit understanding and generation formats are shown below.
 
-\subsubsection{Understanding Evaluation.} We evaluate text recognition on the first 250 samples from the test split of the same corpus. For each example, we normalize the reference sentence in the same way as during training and re-render it as a \texttt{clean\_light} markdown image. We then prompt the model to extract all text from the image in reading order, following the default understanding prompt format and decoding procedure of each model. After generation, both prediction and reference are lowercased, line breaks are replaced with spaces, and leading and trailing whitespace is stripped. We report WER, CER, BLEU, METEOR, average edit distance, and token-level precision, recall, and F1.
+\begin{quote}
+\textbf{Understanding question:} Extract all text from the image. \\
+\textbf{Understanding answer:} The train arrived before sunset. \\
+\textbf{Generation prompt:} A Mathpix Markdown format with sharp, legible black text. High-resolution typography, top-down view. \\
+The text is rendered in natural left-to-right, top-to-bottom reading order. The text reads: The train arrived before sunset.
+\end{quote}
 
-\subsubsection{Generation Evaluation.} We evaluate text generation on the first 250 samples from the test split. For each target sentence, we construct the same Mathpix-style caption template used in training and generate an image following the default text-to-image inference setting of each model. We then apply GLM-OCR~\cite{glm_ocr} to the generated image and extract text. The extracted text and the ground-truth sentence are normalized with the same lowercasing and whitespace processing used in understanding evaluation, and we report the same set of metrics: WER, CER, BLEU, METEOR, average edit distance, and token-level precision, recall, and F1.
+\subsubsection{Understanding Evaluation.} We evaluate text recognition on the first 250 samples from the test split of the same corpus. For each example, we normalize the reference sentence in the same way as during training and re-render it as a \texttt{clean\_light} markdown image. At evaluation time, we use the explicit instruction \texttt{Extract all text from the image in reading order.} and otherwise follow the default understanding prompt format and decoding procedure of each model. After generation, both prediction and reference are lowercased, line breaks are replaced with spaces, and leading and trailing whitespace is stripped. We report WER, CER, BLEU, METEOR, average edit distance, and token-level precision, recall, and F1.
+
+\subsubsection{Generation Evaluation.} We evaluate text generation on the first 250 samples from the test split. For each target sentence, we construct the same Mathpix-style caption template shown above and generate an image following the default text-to-image inference setting of each model. We then apply GLM-OCR~\cite{glm_ocr} to the generated image and extract text. The extracted text and the ground-truth sentence are normalized with the same lowercasing and whitespace processing used in understanding evaluation, and we report the same set of metrics: WER, CER, BLEU, METEOR, average edit distance, and token-level precision, recall, and F1.
 
 \clearpage
 \section{Additional Quantitative Results}
 \label{sec:appendix_additional_quantitative}
 \subsection{Counting}
 \input{table/appendix_counting_full}
-
 \subsection{Spatial Relation}
-\input{table/appendix_spatial_full}
-
 \subsection{Text Recognition and Generation}
-\input{table/appendix_ocr_full}
+\input{table/appendix_spatial_ocr_full_combined}
+
+\clearpage
+\section{Generation Training Results Across Unified Multimodal Models}
+\label{sec:appendix_gen_results}
+We report image-quality metrics for generation checkpoints under two prompt groups. The left table uses task-specific prompts for each task, whereas the right table uses prompts from the COCO validation set. Since FID is computed against the corresponding baseline generator outputs, the baseline model itself is not shown as a table row.
+\input{table/appendix_fid_is_combined}
 
 \clearpage
 \section{Additional Qualitative Results}
@@ -146,7 +159,3 @@ We use the same underlying text-image pair for both modalities. For understandin
 \subsection{Counting}
 \subsection{Spatial Relation}
 \subsection{Text Generation}
-
-\clearpage
-\section{Generation Training Results Across Unified Multimodal Models}
-\label{sec:appendix_gen_results}
